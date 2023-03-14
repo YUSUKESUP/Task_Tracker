@@ -26,7 +26,7 @@ class _StackedContainerState extends State<StackedContainer> {
                     color: Colors.black,
                     width: 5,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.yellow,
@@ -51,7 +51,7 @@ class _StackedContainerState extends State<StackedContainer> {
                     color: Colors.black,
                     width: 5,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.white,
