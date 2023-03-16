@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:firebase_crud/third_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +17,13 @@ class _SecondPageState extends State<SecondPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,color: Colors.black,),
+            onPressed: () {
+              Navigator.of(context).pop(
+              );
+            },
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [

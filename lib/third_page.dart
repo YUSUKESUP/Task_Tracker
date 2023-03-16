@@ -10,13 +10,17 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Colors.black,),
+          onPressed: () {
+            Navigator.of(context).pop(
+            );
+          },
+        ),
         elevation: 0,
         backgroundColor: Color(0xffFDF3E6),
       ),
@@ -41,7 +45,7 @@ class _ThirdPageState extends State<ThirdPage> {
 
       body: SafeArea(
         child: Center(
-          child:  Column(
+          child: Column(
             children: [
               SizedBox(height: 30),
               Container(
@@ -58,8 +62,7 @@ class _ThirdPageState extends State<ThirdPage> {
                         color: Colors.black,
                         blurRadius: 1,
                         spreadRadius: 1,
-                        offset: Offset(5, 5)
-                    ),
+                        offset: Offset(5, 5)),
                   ],
                   color: Colors.white,
                 ),
@@ -73,7 +76,9 @@ class _ThirdPageState extends State<ThirdPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Container(
                 width: 250,
                 height: 200,
@@ -88,86 +93,83 @@ class _ThirdPageState extends State<ThirdPage> {
                         color: Colors.black,
                         blurRadius: 1,
                         spreadRadius: 1,
-                        offset: Offset(5, 5)
-                    ),
+                        offset: Offset(5, 5)),
                   ],
                   color: Colors.white,
                 ),
                 child: Center(
-                    child: Text("MyText", style: TextStyle(fontSize: 20))
-                ),
+                    child: Text("MyText", style: TextStyle(fontSize: 20))),
               ),
-             SizedBox(height: 30,),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: Container(
-                     width: 150,
-                     height: 70,
-                     decoration: BoxDecoration(
-                       border: Border.all(
-                         color: Colors.black,
-                         width: 2,
-                       ),
-                       borderRadius: BorderRadius.circular(30),
-                       boxShadow: const [
-                         BoxShadow(
-                             color: Colors.black,
-                             blurRadius: 1,
-
-                         ),
-                       ],
-                       color: Colors.white,
-                     ),
-                     child: Center(
-                       child: Text(
-                         '勉強',
-                         style: GoogleFonts.bizUDGothic(
-                           color: Color(0xFF000000),
-                           fontSize: 20.0,
-                         ),
-                       ),
-                     ),
-                   ),
-                 ),
-                 Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: Container(
-                     width: 150,
-                     height: 70,
-                     decoration: BoxDecoration(
-                       border: Border.all(
-                         color: Colors.black,
-                         width: 2,
-                       ),
-                       borderRadius: BorderRadius.circular(30),
-                       boxShadow: const [
-                         BoxShadow(
-                           color: Colors.black,
-                           blurRadius: 1,
-
-                         ),
-                       ],
-                       color: Colors.white,
-                     ),
-                     child: Center(
-                       child: Text(
-                         '勉強',
-                         style: GoogleFonts.bizUDGothic(
-                           color: Color(0xFF000000),
-                           fontSize: 20.0,
-                         ),
-                       ),
-                     ),
-                   ),
-                 ),
-               ],
-             ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 150,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 1,
+                          ),
+                        ],
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '勉強',
+                          style: GoogleFonts.bizUDGothic(
+                            color: Color(0xFF000000),
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 150,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 1,
+                          ),
+                        ],
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '勉強',
+                          style: GoogleFonts.bizUDGothic(
+                            color: Color(0xFF000000),
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 30),
               Container(
-
                 width: 350,
                 height: 70,
                 decoration: BoxDecoration(
@@ -178,9 +180,8 @@ class _ThirdPageState extends State<ThirdPage> {
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: const [
                     BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 1,
-
+                      color: Colors.black,
+                      blurRadius: 1,
                     ),
                   ],
                   color: Color(0xffa3b1b4),
@@ -200,9 +201,7 @@ class _ThirdPageState extends State<ThirdPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
+        onPressed: () {},
         tooltip: 'Add Note',
         shape: const CircleBorder(
             side: BorderSide(color: Colors.black, width: 2.0)),
