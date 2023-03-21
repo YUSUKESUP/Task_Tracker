@@ -1,8 +1,9 @@
-import 'package:crud_app/utils/app_state.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utils/firebase_provider.dart';
+import '../utils/app_state.dart';
 
 class AddPage extends ConsumerWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -36,6 +37,7 @@ class AddPage extends ConsumerWidget {
                     ref
                         .read(appStateProvider.notifier)
                         .textAdd(controllerProvider.text);
+                    Navigator.pop(context);
                   },
                   child: Text('新規登録')),
             ],

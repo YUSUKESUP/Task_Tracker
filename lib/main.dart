@@ -1,8 +1,10 @@
-import 'package:crud_app/firebase_options.dart';
-import 'package:crud_app/ui/pages/home_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crud/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +12,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    ProviderScope(child: MyApp()),
+    const ProviderScope(child: MyApp()),
   );
 }
 
