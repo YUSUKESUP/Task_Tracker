@@ -3,6 +3,7 @@ import 'package:firebase_crud/components/month_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../datetime/date_time.dart';
 import '../utils/app_state.dart';
 import '../utils/firebase_provider.dart';
 import 'add_page.dart';
@@ -25,7 +26,10 @@ class HomePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            MonthlySummary(),
+            MonthlySummary(datasets: {
+              DateTime(2023,3,26):10
+            },
+                startDate: todaysDateFormatted()),
             firebaseMemos.when(
               // データがあった（データはqueryの中にある）
               data: (QuerySnapshot query) {
