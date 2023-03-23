@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crud/components/month_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,21 +13,19 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<QuerySnapshot> firebaseMemos =
-    ref.watch(firebaseMemosProvider);
+        ref.watch(firebaseMemosProvider);
     // textProviderを呼び出す定数を定義
     final controllerProvider = ref.watch(textProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Read'),
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            Text('FireStoreのデータを全件取得'),
-            SizedBox(height: 20),
+
+            MonthlySummary(),
             firebaseMemos.when(
               // データがあった（データはqueryの中にある）
               data: (QuerySnapshot query) {
@@ -55,17 +54,18 @@ class HomePage extends ConsumerWidget {
                                           child: Center(
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 const Text('Modal BottomSheet'),
                                                 TextFormField(
                                                   controller:
-                                                  controllerProvider, //providerに定義したコントローラーを使う
+                                                      controllerProvider,
+                                                  //providerに定義したコントローラーを使う
                                                   decoration:
-                                                  const InputDecoration(
+                                                      const InputDecoration(
                                                     border:
-                                                    UnderlineInputBorder(),
+                                                        UnderlineInputBorder(),
                                                     labelText: '文字を入力してください',
                                                   ),
                                                 ),
@@ -74,11 +74,11 @@ class HomePage extends ConsumerWidget {
                                                     onPressed: () async {
                                                       ref
                                                           .read(appStateProvider
-                                                          .notifier)
+                                                              .notifier)
                                                           .textUpdate(
-                                                          document,
-                                                          controllerProvider
-                                                              .text);
+                                                              document,
+                                                              controllerProvider
+                                                                  .text);
                                                     },
                                                     child: Text('編集')),
                                                 SizedBox(height: 20),
@@ -138,7 +138,7 @@ class HomePage extends ConsumerWidget {
           );
         },
         child: Icon(Icons.add),
-    ),
+      ),
     );
   }
 }

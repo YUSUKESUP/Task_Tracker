@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.4.0
   cloud_firestore: ^4.2.0
   flutter_riverpod: ^2.1.1
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:
