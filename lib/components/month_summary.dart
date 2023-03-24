@@ -43,9 +43,8 @@ class MonthlySummary extends StatelessWidget {
       //   },
       // ),
       child: HeatMap(
-
         startDate: createDateTimeObject(startDate),
-        endDate: DateTime.now().add(Duration(days: 365)),
+        endDate: DateTime.now().add(Duration(days: 60)),
         datasets: datasets,
         colorMode: ColorMode.opacity,
         defaultColor: Colors.grey[200],
