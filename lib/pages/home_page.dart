@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/components/month_summary.dart';
+import 'package:firebase_crud/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_state.dart';
 import '../utils/firebase_provider.dart';
 
 class HomePage extends ConsumerWidget {
-
-
-
-   const HomePage({Key? key,}) : super(key: key);
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,28 +21,47 @@ class HomePage extends ConsumerWidget {
     final controllerProvider = ref.watch(textProvider);
 
     return Scaffold(
-        backgroundColor: Color(0xffFDF3E6),
+      backgroundColor: Color(0xffFDF3E6),
       appBar: AppBar(
+          title: Text(
+            'Task Tracker',
+            style: GoogleFonts.openSans(
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           backgroundColor: Color(0xffFDF3E6),
           elevation: 0,
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Icon(Icons.settings,color: Colors.black,),
+              padding: const EdgeInsets.only(right: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.settings),
+                color: Colors.black,
+                onPressed: ()=>
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SettingPage(); // 遷移先の画面widgetを指定
+                        },
+                      ),
+                    ),
+              ),
             ),
-      ]),
+          ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             MonthlySummary(
-                datasets: {
-                  DateTime(2023, 3, 26): 1,
-                  DateTime(2023, 3, 27): 2,
-                  DateTime(2023, 3, 28): 3,
-                  DateTime(2023, 3, 29): 4,
-                  DateTime(2023, 3, 30): 5,
-                },
+              datasets: {
+                DateTime(2023, 3, 26): 1,
+                DateTime(2023, 3, 27): 2,
+                DateTime(2023, 3, 28): 3,
+                DateTime(2023, 3, 29): 4,
+                DateTime(2023, 3, 30): 5,
+              },
             ),
             firebaseMemos.when(
               data: (QuerySnapshot query) {
@@ -53,14 +73,51 @@ class HomePage extends ConsumerWidget {
                           motion: const StretchMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context)  {
-
-                                ref.read(appStateProvider
-                                    .notifier)
-                                    .textUpdate(
-                                document,
-                                controllerProvider
-                                .text);
+                              onPressed: (context) {
+                                showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SizedBox(
+                                          height: 400,
+                                          child: Center(
+                                              child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: <Widget>[
+                                                TextFormField(
+                                                  controller:
+                                                      controllerProvider,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border:
+                                                        UnderlineInputBorder(),
+                                                    labelText: '文字を入力してください',
+                                                  ),
+                                                ),
+                                                SizedBox(height: 20),
+                                                ElevatedButton(
+                                                    onPressed: () async {
+                                                      ref
+                                                          .read(appStateProvider
+                                                              .notifier)
+                                                          .textUpdate(
+                                                              document,
+                                                              controllerProvider
+                                                                  .text);
+                                                      controllerProvider.clear();
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('編集')),
+                                                SizedBox(height: 20),
+                                                ElevatedButton(
+                                                  child: const Text('閉じる'),
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                ),
+                                              ])));
+                                    });
                               },
                               backgroundColor: Colors.grey.shade800,
                               icon: Icons.settings,
@@ -68,9 +125,8 @@ class HomePage extends ConsumerWidget {
                             ),
                             SlidableAction(
                               onPressed: (context) {
-                                ref.read(
-                                    appStateProvider.
-                                    notifier)
+                                ref
+                                    .read(appStateProvider.notifier)
                                     .deleteMemo(document);
                               },
                               backgroundColor: Colors.red.shade400,
@@ -79,15 +135,18 @@ class HomePage extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: 65,
-                          child: ListTile(
-                            leading: const Icon(Icons.add),
-                            title: Text(document['text']),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 65,
+                            child: ListTile(
+                              leading: const Icon(Icons.add),
+                              title: Text(document['text']),
+                            ),
                           ),
                         ),
                       );
@@ -98,7 +157,6 @@ class HomePage extends ConsumerWidget {
               loading: () {
                 return const Text('Loading');
               },
-
               error: (e, stackTrace) {
                 return Text('error: $e');
               },
@@ -115,27 +173,51 @@ class HomePage extends ConsumerWidget {
             context: context,
             barrierColor: Colors.black.withOpacity(0.2),
             builder: (BuildContext ctx) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 50,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: controllerProvider,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: '文字を入力してください',
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SizedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: controllerProvider,
+                        decoration: InputDecoration(
+                          labelText: '文字を入力してください',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                        onPressed: () async {
+                      const SizedBox(height: 20),
+                      InkWell(
+                        onTap: () {
                           ref
                               .read(appStateProvider.notifier)
                               .textAdd(controllerProvider.text);
+                          controllerProvider.clear();
                           Navigator.pop(context);
                         },
-                        child: const Text('新規登録')),
-                  ],
+                        child: Container(
+                          height: 65,
+                          decoration: BoxDecoration(
+                            color: Colors.indigo,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'タスクを追加',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
