@@ -5,11 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/conform.dart';
 import '../utils/app_state.dart';
 import '../utils/firebase_provider.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({
+
+  final AutoDisposeStateProvider<bool> _isCheckedProvider =
+  StateProvider.autoDispose((ref) {
+    return false;
+  });
+
+   HomePage({
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +26,8 @@ class HomePage extends ConsumerWidget {
         ref.watch(firebaseMemosProvider);
 
     final controllerProvider = ref.watch(textProvider);
+    final bool isChecked = ref.watch(_isCheckedProvider);
+
 
     return Scaffold(
       backgroundColor: Color(0xffFDF3E6),
@@ -36,18 +45,18 @@ class HomePage extends ConsumerWidget {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                icon: Icon(Icons.settings),
-                color: Colors.black,
-                onPressed: ()=>
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SettingPage(); // 遷移先の画面widgetを指定
-                        },
-                      ),
-                    ),
-              ),
+              // child: IconButton(
+              //   icon: Icon(Icons.settings),
+              //   color: Colors.black,
+              //   onPressed: () =>
+              //       Navigator.of(context).push(
+              //         MaterialPageRoute(
+              //           builder: (context) {
+              //             return SettingPage(); // 遷移先の画面widgetを指定
+              //           },
+              //         ),
+              //       ),
+              // ),
             ),
           ]),
       body: Padding(
@@ -74,7 +83,7 @@ class HomePage extends ConsumerWidget {
                           children: [
                             SlidableAction(
                               onPressed: (context) {
-                                showModalBottomSheet<void>(
+                                showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return SizedBox(
@@ -142,9 +151,15 @@ class HomePage extends ConsumerWidget {
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            height: 65,
+                            height: 60,
                             child: ListTile(
-                              leading: const Icon(Icons.add),
+                              leading: Checkbox(
+                                activeColor: Colors.red,
+                                value: isChecked,
+                                onChanged: (bool? checkedValue) {
+                                  ref.read(_isCheckedProvider.notifier).state = checkedValue!;
+                                },
+                              ),
                               title: Text(document['text']),
                             ),
                           ),
@@ -173,6 +188,15 @@ class HomePage extends ConsumerWidget {
             context: context,
             barrierColor: Colors.black.withOpacity(0.2),
             builder: (BuildContext ctx) {
+              // return ConformPage(
+              //     buttonName: 'タスクを追加',
+              //     controller: controllerProvider,
+              //     onPressed: ref
+              //                   .read(appStateProvider.notifier)
+              //                   .textAdd(controllerProvider.text),
+              //               controllerProvider.clear(),
+              //               Navigator.pop(context),
+              // );
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-final firebaseProvider =
-Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
+final firebaseProvider = Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
 
 
 final textProvider = StateProvider.autoDispose((ref) {
@@ -13,6 +12,9 @@ final textProvider = StateProvider.autoDispose((ref) {
 });
 
 
+
+
 final firebaseMemosProvider = StreamProvider.autoDispose((_) {
   return FirebaseFirestore.instance.collection('memos').snapshots();
 });
+
