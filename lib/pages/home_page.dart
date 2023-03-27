@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/components/month_summary.dart';
-import 'package:firebase_crud/pages/setting_page.dart';
+import 'package:firebase_crud/pages/setting_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -29,6 +29,7 @@ class HomePage extends ConsumerWidget {
     final bool isChecked = ref.watch(_isCheckedProvider);
 
 
+
     return Scaffold(
       backgroundColor: Color(0xffFDF3E6),
       appBar: AppBar(
@@ -45,18 +46,18 @@ class HomePage extends ConsumerWidget {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              // child: IconButton(
-              //   icon: Icon(Icons.settings),
-              //   color: Colors.black,
-              //   onPressed: () =>
-              //       Navigator.of(context).push(
-              //         MaterialPageRoute(
-              //           builder: (context) {
-              //             return SettingPage(); // 遷移先の画面widgetを指定
-              //           },
-              //         ),
-              //       ),
-              // ),
+              child: IconButton(
+                icon: Icon(Icons.notifications),
+                color: Colors.black,
+                onPressed: () =>
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const SettingNotificationPage(); // 遷移先の画面widgetを指定
+                        },
+                      ),
+                    ),
+              ),
             ),
           ]),
       body: Padding(
@@ -119,7 +120,7 @@ class HomePage extends ConsumerWidget {
                                                       Navigator.pop(context);
                                                     },
                                                     child: Text('編集')),
-                                                SizedBox(height: 20),
+                                                SizedBox(height: 40),
                                                 ElevatedButton(
                                                   child: const Text('閉じる'),
                                                   onPressed: () =>
@@ -154,13 +155,21 @@ class HomePage extends ConsumerWidget {
                             height: 60,
                             child: ListTile(
                               leading: Checkbox(
-                                activeColor: Colors.red,
+                                activeColor: Colors.black,
                                 value: document['isDone'],
                                 onChanged: (bool? value) {
                                   FirebaseFirestore.instance.collection('memos').doc(document.id).update({'isDone':value});
                                 },
                               ),
-                              title: Text(document['text']),
+                              title: Text(document['text'],
+                              //     style: TextStyle(
+                              //    decoration: if (value == true) {
+                              //     TextDecoration.lineThrough
+                              //     } else {
+                              //     TextDecoration.none
+                              //     }
+                              // ),
+                                ),
                             ),
                           ),
                         ),
@@ -204,7 +213,7 @@ class HomePage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 40),
                       InkWell(
                         onTap: () {
                           ref
