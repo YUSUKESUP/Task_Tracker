@@ -12,8 +12,6 @@ final textProvider = StateProvider.autoDispose((ref) {
 });
 
 
-
-
 final firebaseMemosProvider = StreamProvider.autoDispose((_) {
   return FirebaseFirestore.instance.collection('memos').snapshots();
 });

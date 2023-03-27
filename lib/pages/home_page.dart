@@ -155,9 +155,9 @@ class HomePage extends ConsumerWidget {
                             child: ListTile(
                               leading: Checkbox(
                                 activeColor: Colors.red,
-                                value: isChecked,
-                                onChanged: (bool? checkedValue) {
-                                  ref.read(_isCheckedProvider.notifier).state = checkedValue!;
+                                value: document['isDone'],
+                                onChanged: (bool? value) {
+                                  FirebaseFirestore.instance.collection('memos').doc(document.id).update({'isDone':value});
                                 },
                               ),
                               title: Text(document['text']),
@@ -188,15 +188,6 @@ class HomePage extends ConsumerWidget {
             context: context,
             barrierColor: Colors.black.withOpacity(0.2),
             builder: (BuildContext ctx) {
-              // return ConformPage(
-              //     buttonName: 'タスクを追加',
-              //     controller: controllerProvider,
-              //     onPressed: ref
-              //                   .read(appStateProvider.notifier)
-              //                   .textAdd(controllerProvider.text),
-              //               controllerProvider.clear(),
-              //               Navigator.pop(context),
-              // );
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(

@@ -21,7 +21,7 @@ class AppState extends StateNotifier<dynamic> {
 
     final ref = await _ref.read(firebaseProvider).collection('memos')
 
-        .add({'text': text, 'createdAt': Timestamp.fromDate(DateTime.now())});
+        .add({'text': text, 'createdAt': Timestamp.fromDate(DateTime.now()),'isDone':false});
   }
 
   Future<void> textUpdate(dynamic document, String text) async {
