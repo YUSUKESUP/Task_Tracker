@@ -152,24 +152,27 @@ class HomePage extends ConsumerWidget {
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            height: 60,
-                            child: ListTile(
-                              leading: Checkbox(
-                                activeColor: Colors.black,
-                                value: document['isDone'],
-                                onChanged: (bool? value) {
-                                  FirebaseFirestore.instance.collection('memos').doc(document.id).update({'isDone':value});
-                                },
-                              ),
-                              title: Text(document['text'],
-                              //     style: TextStyle(
-                              //    decoration: if (value == true) {
-                              //     TextDecoration.lineThrough
-                              //     } else {
-                              //     TextDecoration.none
-                              //     }
-                              // ),
+                            height: 75,
+                            child: Center(
+                              child: ListTile(
+                                leading: Checkbox(
+                                  activeColor: Colors.black,
+                                  value: document['isDone'],
+                                  onChanged: (bool? value) {
+                                    FirebaseFirestore.instance.collection('memos').doc(document.id).update({'isDone':value});
+                                  },
                                 ),
+                                title: Text(document['text'],
+                                  overflow: TextOverflow.ellipsis,
+                                //     style: TextStyle(
+                                //    decoration: if (value == true) {
+                                //     TextDecoration.lineThrough
+                                //     } else {
+                                //     TextDecoration.none
+                                //     }
+                                // ),
+                                  ),
+                              ),
                             ),
                           ),
                         ),
