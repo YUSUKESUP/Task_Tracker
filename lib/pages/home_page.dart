@@ -4,6 +4,7 @@ import 'package:firebase_crud/pages/setting_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/conform.dart';
 import '../utils/app_state.dart';
@@ -15,7 +16,6 @@ class HomePage extends ConsumerWidget {
   StateProvider.autoDispose((ref) {
     return false;
   });
-
    HomePage({
     Key? key,
   }) : super(key: key);
@@ -53,7 +53,7 @@ class HomePage extends ConsumerWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return const SettingNotificationPage(); // 遷移先の画面widgetを指定
+                          return const SettingNotificationPage();
                         },
                       ),
                     ),
@@ -65,14 +65,18 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
             MonthlySummary(
-              datasets: {
-                DateTime(2023, 3, 26): 1,
-                DateTime(2023, 3, 27): 2,
-                DateTime(2023, 3, 28): 3,
-                DateTime(2023, 3, 29): 4,
-                DateTime(2023, 3, 30): 5,
-              },
+
             ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 72.0),
+            //   child: SvgPicture.asset(
+            //     'assets/undraw_add_files_re_v09g.svg',
+            //     semanticsLabel: 'shopping',
+            //     width: 200,
+            //     height: 200,
+            //   ),
+            // ),
+
             firebaseMemos.when(
               data: (QuerySnapshot query) {
                 return Expanded(
@@ -164,13 +168,12 @@ class HomePage extends ConsumerWidget {
                                 ),
                                 title: Text(document['text'],
                                   overflow: TextOverflow.ellipsis,
-                                //     style: TextStyle(
-                                //    decoration: if (value == true) {
-                                //     TextDecoration.lineThrough
-                                //     } else {
-                                //     TextDecoration.none
-                                //     }
-                                // ),
+                                    style: TextStyle(
+                                   decoration:document['isDone'] ?? false ?
+                                   TextDecoration.lineThrough
+                                   : TextDecoration.none
+
+                                ),
                                   ),
                               ),
                             ),
