@@ -4,34 +4,30 @@ import 'package:firebase_crud/pages/setting_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../components/conform.dart';
 import '../utils/app_state.dart';
+import '../utils/auth_controll.dart';
 import '../utils/firebase_provider.dart';
 
 class HomePage extends ConsumerWidget {
 
-  final AutoDisposeStateProvider<bool> _isCheckedProvider =
-  StateProvider.autoDispose((ref) {
-    return false;
-  });
    HomePage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<QuerySnapshot> firebaseMemos =
+    final AsyncValue<QuerySnapshot> firebaseTasks =
         ref.watch(firebaseMemosProvider);
 
     final controllerProvider = ref.watch(textProvider);
-    final bool isChecked = ref.watch(_isCheckedProvider);
+
+
 
 
 
     return Scaffold(
-      backgroundColor: Color(0xffFDF3E6),
+      backgroundColor: const Color(0xffFDF3E6),
       appBar: AppBar(
           title: Text(
             'Task Tracker',
@@ -41,15 +37,16 @@ class HomePage extends ConsumerWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: Color(0xffFDF3E6),
+          backgroundColor: const Color(0xffFDF3E6),
           elevation: 0,
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: IconButton(
-                icon: Icon(Icons.notifications),
+                icon: const Icon(Icons.notifications),
                 color: Colors.black,
                 onPressed: () =>
+
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
@@ -64,7 +61,7 @@ class HomePage extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            MonthlySummary(
+            const MonthlySummary(
 
             ),
             // Padding(
@@ -77,7 +74,7 @@ class HomePage extends ConsumerWidget {
             //   ),
             // ),
 
-            firebaseMemos.when(
+            firebaseTasks.when(
               data: (QuerySnapshot query) {
                 return Expanded(
                   child: ListView(
@@ -110,7 +107,7 @@ class HomePage extends ConsumerWidget {
                                                     labelText: '文字を入力してください',
                                                   ),
                                                 ),
-                                                SizedBox(height: 20),
+                                                const SizedBox(height: 20),
                                                 ElevatedButton(
                                                     onPressed: () async {
                                                       ref
@@ -123,8 +120,8 @@ class HomePage extends ConsumerWidget {
                                                       controllerProvider.clear();
                                                       Navigator.pop(context);
                                                     },
-                                                    child: Text('編集')),
-                                                SizedBox(height: 40),
+                                                    child: const Text('編集')),
+                                                const SizedBox(height: 40),
                                                 ElevatedButton(
                                                   child: const Text('閉じる'),
                                                   onPressed: () =>
@@ -163,7 +160,7 @@ class HomePage extends ConsumerWidget {
                                   activeColor: Colors.black,
                                   value: document['isDone'],
                                   onChanged: (bool? value) {
-                                    FirebaseFirestore.instance.collection('memos').doc(document.id).update({'isDone':value});
+                                    FirebaseFirestore.instance.collection('users').doc('uid').collection('memos').doc(document.id).update({'isDone':value});
                                   },
                                 ),
                                 title: Text(document['text'],
@@ -234,7 +231,7 @@ class HomePage extends ConsumerWidget {
                             color: Colors.indigo,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'タスクを追加',
                               style: TextStyle(

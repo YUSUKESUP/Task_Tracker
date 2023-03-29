@@ -13,6 +13,6 @@ final textProvider = StateProvider.autoDispose((ref) {
 
 
 final firebaseMemosProvider = StreamProvider.autoDispose((_) {
-  return FirebaseFirestore.instance.collection('memos').snapshots();
+  return FirebaseFirestore.instance.collection('users').doc('uid').collection('memos').snapshots();
 });
 
