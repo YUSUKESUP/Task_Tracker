@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_provider.dart';
 
 
-
-
 final appStateProvider = StateNotifierProvider<AppState, dynamic>((ref) {
 
   return AppState(ref);
@@ -23,8 +21,6 @@ class AppState extends StateNotifier<dynamic> {
 
         .add({'text': text, 'createdAt': Timestamp.fromDate(DateTime.now()),'isDone':false});
 
-    // final ref = await _ref.read(firebaseProvider).collection('users').doc().collection('memos')
-    //     .add({'text': text, 'createdAt': Timestamp.fromDate(DateTime.now()),'isDone':false});
   }
 
   Future<void> textUpdate(dynamic document, String text) async {
@@ -41,4 +37,5 @@ class AppState extends StateNotifier<dynamic> {
         .doc(document.id)
         .delete();
   }
+
 }

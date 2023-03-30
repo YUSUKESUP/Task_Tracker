@@ -12,7 +12,14 @@ final textProvider = StateProvider.autoDispose((ref) {
 });
 
 
-final firebaseMemosProvider = StreamProvider.autoDispose((_) {
+final firebaseTasksProvider = StreamProvider.autoDispose((_) {
   return FirebaseFirestore.instance.collection('users').doc('uid').collection('memos').snapshots();
 });
+
+
+final firebaseNotificationsProvider = StreamProvider.autoDispose((_) {
+return FirebaseFirestore.instance.collection('users').doc('uid').snapshots();
+}
+
+);
 

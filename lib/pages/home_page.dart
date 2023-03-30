@@ -17,12 +17,11 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<QuerySnapshot> firebaseTasks =
-        ref.watch(firebaseMemosProvider);
+
+    final AsyncValue<QuerySnapshot> firebaseTasks = ref.watch(firebaseTasksProvider);
+
 
     final controllerProvider = ref.watch(textProvider);
-
-
 
 
 
@@ -50,7 +49,7 @@ class HomePage extends ConsumerWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return const SettingNotificationPage();
+                          return  SettingNotificationPage();
                         },
                       ),
                     ),
