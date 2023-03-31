@@ -24,17 +24,18 @@ class SettingNotificationPage extends ConsumerWidget {
     );
 
     return Scaffold(
-        backgroundColor: Color(0xffFDF3E6),
+        backgroundColor: const Color(0xffFDF3E6),
         appBar: AppBar(
-          backgroundColor: Color(0xffFDF3E6), centerTitle: true,
+          backgroundColor: const Color(0xffFDF3E6), centerTitle: true,
+
           leading: IconButton(
             color: Colors.black,
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          title: Text('通知設定ページ',
+          title: const Text('通知設定ページ',
             style: TextStyle(color: Colors.black),
           ),
 
@@ -50,7 +51,7 @@ class SettingNotificationPage extends ConsumerWidget {
                  FirebaseFirestore.instance.collection('users').doc('uid').update({'shouldNotification':value});
                 },
               ),
-              title: Text('リマインド'),
+              title: const Text('リマインド'),
 
             ),
             divider

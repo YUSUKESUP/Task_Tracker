@@ -35,8 +35,8 @@ class MonthlySummary extends StatelessWidget {
       //   },
       // ),
       child: HeatMap(
-        startDate: DateTime.now().subtract(Duration(days: 50)),
-        endDate: DateTime.now().add(Duration(days: 30)),
+        startDate: DateTime.now().subtract(const Duration(days: 60)),
+        endDate: DateTime.now().add(const Duration(days: 20)),
          datasets: {
            DateTime(2023, 3, 26): 1,
            DateTime(2023, 3, 27): 2,

@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crud/pages/home_page.dart';
@@ -17,7 +18,11 @@ void main() async {
   if (firebaseUser == null) {
     // 未サインインなら匿名ユーザーでサインインする
     final credential = await FirebaseAuth.instance.signInAnonymously();
+
     final uid = credential.user!.uid;
+    final users = FirebaseFirestore.instance.collection('users').doc('uid').set({
+      'uid': uid,
+    });
     print('Signed in: uid = $uid');
   }
 
@@ -33,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home:  HomePage(),
     );

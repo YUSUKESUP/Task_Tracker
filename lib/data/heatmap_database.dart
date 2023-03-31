@@ -1,5 +1,84 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class TaskDatabase {
+  List<Map<String, dynamic>> _tasks = [];
+  Map<DateTime, int> heatMapDataSet = {};
+
+  Future<void> fetchTasks() async {
+    final subCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc('uid')
+        .collection('memos');
+
+    final taskDatas = await subCollectionRef.get();
+
+    if (taskDatas != null) {
+      _tasks.addAll(taskDatas.docs.map((doc) => doc.data()));
+    }
+  }
+
+
+
+}
+
+
+//
+// Future<Map<DateTime, int>> getDataFromFirestore() async {
 //
 //
+  //
+  // // サブコレクションの参照を取得
+  // final subCollectionRef = FirebaseFirestore.instance
+  //     .collection('users')
+  //     .doc('uid')
+  //     .collection('memos');
+
+  // // サブコレクションからデータを取得
+  // final snapshot = await subCollectionRef.get();
+  // print(snapshot);
+  //
+  // //
+  // // データをMap<DateTime, int>に変換
+  // final dataMap = snapshot.docs.fold<Map<DateTime, int>>({}, (map, doc) {
+  //   final data = doc.data();
+  //   final dateString = data['date'] as String; // 日付を表す文字列
+  //   final count = data['count'] as bool; // 数値データ
+  //   final dateTime = DateTime.parse(dateString); // 日付文字列をDateTimeオブジェクトに変換
+  //   map[dateTime] = count ? 1 : 0; // bool型のデータをint型に変換してMapに格納
+  //   return map;
+  // });
+  //
+  // return dataMap;
+// }
+
+
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+//
+// import '../datetime/date_time.dart';
+//
+//
+//
+// class HabitDatabase {
+//   List todaysTaskList = [];
+//
+//
+//   final userTasks = FirebaseFirestore.instance.collection('users')
+//       .doc('uid')
+//       .collection('memos')
+//       .snapshots();
+//
+//
+//   Map<DateTime, int> heatMapDatas = {};
+//
+// }
+
+
+//
+//
+// import 'package:hive_flutter/hive_flutter.dart';
 //
 // import '../datetime/date_time.dart';
 //
@@ -14,6 +93,7 @@
 //   void createDefaultData() {
 //     todaysHabitList = [
 //       ["Run", false],
+//       ["Read", false],
 //     ];
 //
 //     _myBox.put("START_DATE", todaysDateFormatted());

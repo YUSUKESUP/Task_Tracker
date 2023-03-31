@@ -11,7 +11,7 @@ import '../utils/firebase_provider.dart';
 
 class HomePage extends ConsumerWidget {
 
-   HomePage({
+   const HomePage({
     Key? key,
   }) : super(key: key);
 
