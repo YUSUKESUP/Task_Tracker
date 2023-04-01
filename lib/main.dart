@@ -20,7 +20,7 @@ void main() async {
     final credential = await FirebaseAuth.instance.signInAnonymously();
 
     final uid = credential.user!.uid;
-    final users = FirebaseFirestore.instance.collection('users').doc('uid').set({
+    final users = FirebaseFirestore.instance.collection('users').doc(uid).set({
       'uid': uid,
     });
     print('Signed in: uid = $uid');

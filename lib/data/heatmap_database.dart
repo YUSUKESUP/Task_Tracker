@@ -1,9 +1,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crud/datetime/date_time.dart';
 
 class TaskDatabase {
   List<Map<String, dynamic>> _tasks = [];
-  Map<DateTime, int> heatMapDataSet = {};
+
 
   Future<void> fetchTasks() async {
     final subCollectionRef = FirebaseFirestore.instance
@@ -15,12 +16,62 @@ class TaskDatabase {
 
     if (taskDatas != null) {
       _tasks.addAll(taskDatas.docs.map((doc) => doc.data()));
+      print('');
     }
   }
+
+  Map<DateTime, int> heatMapDataSet = {};
+
+//--------------------------------------------------------------------
+
+// void loadHeatMap() {
+
+// String getStartDate() {
+//   return _myBox.get('START_DATE');
+// }
+//
+//
+//   DateTime start∂ate = createDateTimeObject(getStartDate());
+//
+//   int (int i = 0; i <daysInBetween + 1; i++) {
+//     String yyyymmdd =
+//   convertDateTimeToString(starDate.add(Duration(day:i)));
+//
+// int grtCompletionSatus(String yyyymmdd) {
+//   int completionStatus = myBox.get('COMPLETION_STATUS_$yyyymmdd') ?? 0
+//       return completionStatus;
+// }
+//
+//
+//     int completionStatus = db.getCompletionStatus(yyyymmdd);
+//
+//     int year = startDate.add(Duration(day:i)).year;
+//
+//     int month = startDate.add(Duration(day:i)).month;
+//
+//   int day = startDate.add(Duration(day:i)).day;
+//
+//   final percentForEachDay = <DateTime, int> {
+//     DateTime(year,month,day):completionStatus
+//   };
+//
+//
+//   heatMapDataSet.addEntries(percentForEachDay.entries);
+//
+//
+//
+//   }
+//
+// }
+
+
+
+//--------------------------------------------------------------------
 
 
 
 }
+
 
 
 //

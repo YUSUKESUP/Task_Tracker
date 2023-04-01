@@ -60,9 +60,7 @@ class HomePage extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const MonthlySummary(
-
-            ),
+            const MonthlySummary(),
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
             //   child: SvgPicture.asset(
