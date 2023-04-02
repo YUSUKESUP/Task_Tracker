@@ -16,7 +16,6 @@ class SettingNotificationPage extends ConsumerWidget {
     final  firebaseNotifications = ref.watch(firebaseNotificationsProvider);
 
 
-
     const divider = Divider(
       thickness: 2,
       height: 0,

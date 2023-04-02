@@ -19,11 +19,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final AsyncValue<QuerySnapshot> firebaseTasks = ref.watch(firebaseTasksProvider);
-
-
     final controllerProvider = ref.watch(textProvider);
-
-
 
     return Scaffold(
       backgroundColor: const Color(0xffFDF3E6),
@@ -163,9 +159,9 @@ class HomePage extends ConsumerWidget {
                                 title: Text(document['text'],
                                   overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                   decoration:document['isDone'] ?? false ?
-                                   TextDecoration.lineThrough
-                                   : TextDecoration.none
+                                   decoration:document['isDone'] ?? false
+                                       ? TextDecoration.lineThrough
+                                       : TextDecoration.none
 
                                 ),
                                   ),
