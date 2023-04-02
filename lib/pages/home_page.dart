@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/components/month_summary.dart';
 import 'package:firebase_crud/pages/setting_notification.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_state.dart';
 import '../utils/auth_controll.dart';
 import '../utils/firebase_provider.dart';
+import '../widget/tabs.dart';
 
 class HomePage extends ConsumerWidget {
 
@@ -21,41 +23,20 @@ class HomePage extends ConsumerWidget {
     final AsyncValue<QuerySnapshot> firebaseTasks = ref.watch(firebaseTasksProvider);
     final controllerProvider = ref.watch(textProvider);
 
+    // final _auth = FirebaseAuth.instance;
+    //
+    // Future<void> signOut() async {
+    //   await _auth.signOut();
+    // }
+
     return Scaffold(
       backgroundColor: const Color(0xffFDF3E6),
-      appBar: AppBar(
-          title: Text(
-            'Task Tracker',
-            style: GoogleFonts.openSans(
-              color: Colors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: const Color(0xffFDF3E6),
-          elevation: 0,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                icon: const Icon(Icons.notifications),
-                color: Colors.black,
-                onPressed: () =>
 
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return  SettingNotificationPage();
-                        },
-                      ),
-                    ),
-              ),
-            ),
-          ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+
             const MonthlySummary(),
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
