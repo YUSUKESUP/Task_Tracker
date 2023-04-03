@@ -4,11 +4,14 @@ import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 
 class MonthlySummary extends StatelessWidget {
 
+  // final Map<DateTime, int>? heatmapDatasets;
 
-  const MonthlySummary({
+   MonthlySummary({
     super.key,
-
+     // required this.heatmapDatasets,
   });
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +40,7 @@ class MonthlySummary extends StatelessWidget {
       child: HeatMap(
         startDate: DateTime.now().subtract(const Duration(days: 60)),
         endDate: DateTime.now().add(const Duration(days: 20)),
-         datasets: {
-           DateTime(2023, 3, 26): 1,
-           DateTime(2023, 3, 27): 2,
-           DateTime(2023, 3, 28): 3,
-           DateTime(2023, 3, 29): 4,
-           DateTime(2023, 3, 30): 5,
-           DateTime(2023, 4, 1): 6,
-      },
+         datasets:  { DateTime(2023, 3, 26): 1,},
         colorMode: ColorMode.opacity,
         defaultColor: Colors.white,
         textColor: Colors.black,
@@ -63,3 +59,5 @@ class MonthlySummary extends StatelessWidget {
     );
   }
 }
+
+

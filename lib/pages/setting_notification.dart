@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,7 +48,7 @@ class SettingNotificationPage extends ConsumerWidget {
                 trackColor: Colors.blueGrey,
                 value: firebaseNotifications.valueOrNull?.data()?['shouldNotification'] ?? false,
                 onChanged: (value) {
-                 FirebaseFirestore.instance.collection('users').doc('uid').update({'shouldNotification':value});
+                 FirebaseFirestore.instance.collection('users').doc(Uid).update({'shouldNotification':value});
                 },
               ),
               title: const Text('リマインド'),

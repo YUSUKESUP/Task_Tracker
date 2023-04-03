@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_provider.dart';
@@ -15,16 +16,21 @@ class AppState extends StateNotifier<dynamic> {
 
   AppState(this._ref) : super([]);
 
+
+
+
   Future<void> textAdd(String text) async {
 
-    final ref = await _ref.read(firebaseProvider).collection('users').doc('uid').collection('memos')
+
+    final ref = await _ref.read(firebaseProvider).collection('users').doc(Uid).collection('memos')
 
         .add({'text': text, 'createdAt': Timestamp.fromDate(DateTime.now()),'isDone':false});
 
   }
 
   Future<void> textUpdate(dynamic document, String text) async {
-    await FirebaseFirestore.instance
+    await _ref.read(firebaseProvider)
+        .collection('users').doc(Uid)
         .collection('memos')
         .doc(document.id)
         .update({'text': text});
@@ -32,10 +38,19 @@ class AppState extends StateNotifier<dynamic> {
 
 
   Future<void> deleteMemo(dynamic document) async {
-    await FirebaseFirestore.instance
+    await _ref.read(firebaseProvider)
+        .collection('users').doc(Uid)
         .collection('memos')
         .doc(document.id)
         .delete();
   }
+
+  // Future<void> switchUpdate() async {
+  //        DocumentReference documentRef = FirebaseFirestore.instance
+  //       .collection('users')
+  //            .where('uid',isEqualTo: Uid);
+  //        documentRef.update({'shouldNotification': value});
+  //
+  // }
 
 }

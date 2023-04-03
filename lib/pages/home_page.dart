@@ -37,7 +37,7 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
 
-            const MonthlySummary(),
+             MonthlySummary(),
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
             //   child: SvgPicture.asset(
@@ -134,7 +134,7 @@ class HomePage extends ConsumerWidget {
                                   activeColor: Colors.black,
                                   value: document['isDone'],
                                   onChanged: (bool? value) {
-                                    FirebaseFirestore.instance.collection('users').doc('uid').collection('memos').doc(document.id).update({'isDone':value});
+                                    FirebaseFirestore.instance.collection('users').doc(Uid).collection('memos').doc(document.id).update({'isDone':value});
                                   },
                                 ),
                                 title: Text(document['text'],
