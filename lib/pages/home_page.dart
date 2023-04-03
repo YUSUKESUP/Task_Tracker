@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crud/components/month_summary.dart';
-import 'package:firebase_crud/pages/setting_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:google_fonts/google_fonts.dart';
+import '../data/heatmap_database.dart';
 import '../utils/app_state.dart';
-import '../utils/auth_controll.dart';
 import '../utils/firebase_provider.dart';
-import '../widget/tabs.dart';
+
 
 class HomePage extends ConsumerWidget {
 
@@ -22,6 +19,12 @@ class HomePage extends ConsumerWidget {
 
     final AsyncValue<QuerySnapshot> firebaseTasks = ref.watch(firebaseTasksProvider);
     final controllerProvider = ref.watch(textProvider);
+
+
+   final Map<DateTime,int> heatmapDates = TaskDatabase.heatMapDataSet; // 他のクラスでも heatMapDataSet にアクセス可能
+    print(heatmapDates);
+
+
 
     // final _auth = FirebaseAuth.instance;
     //
@@ -37,7 +40,7 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
 
-             MonthlySummary(),
+             MonthlySummary(heatmapDatasets: heatmapDates),
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
             //   child: SvgPicture.asset(

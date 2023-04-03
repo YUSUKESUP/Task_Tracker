@@ -7,17 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../pages/setting_notification.dart';
 
 
-
-final notificationCountProvider = StateProvider((ref) => 1);
-
 class TabsPage extends ConsumerWidget {
   const TabsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
 
-    final notificationCountNotifier = ref.watch(notificationCountProvider.notifier);
-    final notificationCount = ref.watch(notificationCountProvider);
+
     final _selectedColor = Colors.black;
     final _unselectedColor = Color(0xff5f6368);
 
@@ -39,13 +35,13 @@ class TabsPage extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: IconButton(
-                  icon: const Icon(Icons.notifications),
+                  icon: const Icon(Icons.settings),
                   color: Colors.black,
                   onPressed: () =>
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return   SettingNotificationPage();
+                            return   SettingPage();
                           },
                         ),
                       ),

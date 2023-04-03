@@ -45,6 +45,8 @@ dependencies:
   shared_preferences: ^2.0.20
   flutter_svg: ^2.0.4
   firebase_auth: ^4.3.0
+  package_info_plus: ^3.0.3
+  version: ^3.0.2
 
 
 dev_dependencies:

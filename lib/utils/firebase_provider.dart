@@ -29,6 +29,5 @@ return FirebaseFirestore.instance.collection('users').doc(Uid).snapshots();
 // return FirebaseFirestore.instance.collection('users').where('uid',isEqualTo: Uid).orderBy('').snapshots();
 }
 
-
 );
 

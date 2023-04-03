@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,8 +6,8 @@ import '../utils/firebase_provider.dart';
 
 
 
-class SettingNotificationPage extends ConsumerWidget {
-  SettingNotificationPage({Key? key}) : super(key: key);
+class SettingPage extends ConsumerWidget {
+  SettingPage({Key? key}) : super(key: key);
 
 
   @override
@@ -40,7 +39,7 @@ class SettingNotificationPage extends ConsumerWidget {
           ),
 
         ),
-        body: ListView(
+        body: Column(
           children: [
             ListTile(
               trailing: CupertinoSwitch(
@@ -52,10 +51,33 @@ class SettingNotificationPage extends ConsumerWidget {
                 },
               ),
               title: const Text('リマインド'),
-
             ),
-            divider
-          ]
+            divider,
+            SizedBox(height: 40,),
+            InkWell(
+              onTap: () {
+
+              },
+              child: Container(
+                height: 55,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Center(
+                  child: Text(
+                    '退会',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         )
     );
   }

@@ -2,12 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/utils/firebase_provider.dart';
 
 
-
 class TaskDatabase {
 
 
   List<Map<String, dynamic>> _tasks = [];
-  Map<DateTime, int> heatMapDataSet = {};
+  static final Map<DateTime, int> heatMapDataSet = {};
+
+
+  //シングルトン
+  static final TaskDatabase _instance = TaskDatabase._internal();
+  factory TaskDatabase() => _instance;
+
+  TaskDatabase._internal();
 
 
   Future<void> fetchTasks() async {
@@ -26,15 +32,57 @@ class TaskDatabase {
     final endDate = DateTime.utc(DateTime.now().year - 1, 3, 31);
 
     for (var date = startDate; date.isAfter(endDate);
-        date = date.subtract(Duration(days: 1))) {
-        final count = _tasks.where((task) {
-        final taskDate = DateTime.fromMillisecondsSinceEpoch(task['createdAt'].millisecondsSinceEpoch);
-        return task['value'] == true && taskDate.year == date.year && taskDate.month == date.month && taskDate.day == date.day;
+    date = date.subtract(Duration(days: 1))) {
+      final count = _tasks.where((task) {
+        final taskDate =
+        DateTime.fromMillisecondsSinceEpoch(task['createdAt'].millisecondsSinceEpoch);
+        return task['value'] == true &&
+            taskDate.year == date.year &&
+            taskDate.month == date.month &&
+            taskDate.day == date.day;
       }).length;
       heatMapDataSet[date] = count;
     }
   }
 }
+//
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_crud/utils/firebase_provider.dart';
+//
+//
+//
+// class TaskDatabase {
+//
+//
+//   List<Map<String, dynamic>> _tasks = [];
+//   Map<DateTime, int> heatMapDataSet = {};
+//
+//
+//   Future<void> fetchTasks() async {
+//     final subCollectionRef = FirebaseFirestore.instance
+//         .collection('users')
+//         .doc(Uid)
+//         .collection('memos');
+//
+//     final taskDatas = await subCollectionRef.get();
+//
+//     if (taskDatas != null) {
+//       _tasks.addAll(taskDatas.docs.map((doc) => doc.data()));
+//     }
+//
+//     final startDate = DateTime.utc(DateTime.now().year, 4, 1);
+//     final endDate = DateTime.utc(DateTime.now().year - 1, 3, 31);
+//
+//     for (var date = startDate; date.isAfter(endDate);
+//     date = date.subtract(Duration(days: 1))) {
+//       final count = _tasks.where((task) {
+//         final taskDate = DateTime.fromMillisecondsSinceEpoch(task['createdAt'].millisecondsSinceEpoch);
+//         return task['value'] == true && taskDate.year == date.year && taskDate.month == date.month && taskDate.day == date.day;
+//       }).length;
+//       heatMapDataSet[date] = count;
+//     }
+//   }
+// }
 
 
 // class TaskDatabase {

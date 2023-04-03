@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_provider.dart';
@@ -15,8 +14,6 @@ class AppState extends StateNotifier<dynamic> {
   final Ref _ref;
 
   AppState(this._ref) : super([]);
-
-
 
 
   Future<void> textAdd(String text) async {
@@ -45,12 +42,5 @@ class AppState extends StateNotifier<dynamic> {
         .delete();
   }
 
-  // Future<void> switchUpdate() async {
-  //        DocumentReference documentRef = FirebaseFirestore.instance
-  //       .collection('users')
-  //            .where('uid',isEqualTo: Uid);
-  //        documentRef.update({'shouldNotification': value});
-  //
-  // }
 
 }
