@@ -1,9 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crud/utils/firebase_provider.dart';
-import 'package:firebase_crud/widget/dialog.dart';
+import 'package:firebase_crud/widget/alert_dialog.dart';
 import 'package:firebase_crud/widget/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -51,15 +49,15 @@ class MyApp extends StatelessWidget {
 
 
     //強制アップデート
-    Future<void> versionCheck(dynamic document) async {
+    Future<void> versionCheck() async {
 
       /// ダイアログを表示
       void showUpdateDialog(BuildContext context) {
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) {
-            return const ShowDialog(
+          builder: (_) {
+            return const AlertDialogPage(
                 title: 'バージョン更新のお知らせ',
                 message: '新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい',
                 btnLabel: '今すぐ更新'

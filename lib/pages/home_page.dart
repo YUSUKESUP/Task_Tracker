@@ -22,15 +22,6 @@ class HomePage extends ConsumerWidget {
 
 
    final Map<DateTime,int> heatmapDates = TaskDatabase.heatMapDataSet; // 他のクラスでも heatMapDataSet にアクセス可能
-    print(heatmapDates);
-
-
-
-    // final _auth = FirebaseAuth.instance;
-    //
-    // Future<void> signOut() async {
-    //   await _auth.signOut();
-    // }
 
     return Scaffold(
       backgroundColor: const Color(0xffFDF3E6),

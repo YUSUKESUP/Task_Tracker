@@ -18,7 +18,7 @@ String? Uid = snapshot?.uid;
 
 
 final firebaseTasksProvider = StreamProvider.autoDispose((_) {
-  return FirebaseFirestore.instance.collection('users').doc(Uid).collection('memos').snapshots();
+  return FirebaseFirestore.instance.collection('users').doc(Uid).collection('memos').orderBy('createdAt').snapshots();
   // return FirebaseFirestore.instance.collection('users').where('uid',isEqualTo: Uid).orderBy('memos').snapshots();
 
 });

@@ -12,7 +12,6 @@ class TaskDatabase {
   //シングルトン
   static final TaskDatabase _instance = TaskDatabase._internal();
   factory TaskDatabase() => _instance;
-
   TaskDatabase._internal();
 
 

@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils/firebase_provider.dart';
-
-
+import '../widget/shimple_dialog.dart';
 
 class SettingPage extends ConsumerWidget {
   SettingPage({Key? key}) : super(key: key);
@@ -14,6 +13,14 @@ class SettingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final  firebaseNotifications = ref.watch(firebaseNotificationsProvider);
+
+    Future<void> withdrawalDialog()  async {
+      await showDialog (
+      context: context,
+      builder: (_) {
+      return SimpleDialogPage();
+      });
+    }
 
 
     const divider = Divider(
@@ -34,7 +41,7 @@ class SettingPage extends ConsumerWidget {
               Navigator.pop(context);
             },
           ),
-          title: const Text('通知設定ページ',
+          title: const Text('設定',
             style: TextStyle(color: Colors.black),
           ),
 
@@ -56,7 +63,7 @@ class SettingPage extends ConsumerWidget {
             SizedBox(height: 40,),
             InkWell(
               onTap: () {
-
+                withdrawalDialog;
               },
               child: Container(
                 height: 55,
