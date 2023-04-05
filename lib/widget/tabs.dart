@@ -14,8 +14,8 @@ class TabsPage extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
 
 
-    final _selectedColor = Colors.black;
-    final _unselectedColor = Color(0xff5f6368);
+    const selectedColor = Colors.black;
+    const unselectedColor = Color(0xff5f6368);
 
     return DefaultTabController(
       length: 2,
@@ -53,12 +53,12 @@ class TabsPage extends ConsumerWidget {
           child: Column(
             children:  [
               Container(
-                color: Color(0xffFDF3E6),
-                child: TabBar(
+                color: const Color(0xffFDF3E6),
+                child: const TabBar(
                   indicatorSize: TabBarIndicatorSize.label,
-                  unselectedLabelColor: _unselectedColor,
-                  labelColor: _selectedColor,
-                  indicatorColor: _selectedColor,
+                  unselectedLabelColor: unselectedColor,
+                  labelColor: selectedColor,
+                  indicatorColor: selectedColor,
                   indicator: BoxDecoration(
 
                     border: Border(
@@ -74,7 +74,7 @@ class TabsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: TabBarView(
                   children: [
                     HomePage(),

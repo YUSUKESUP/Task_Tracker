@@ -5,7 +5,7 @@ import 'package:firebase_crud/utils/firebase_provider.dart';
 class TaskDatabase {
 
 
-  List<Map<String, dynamic>> _tasks = [];
+  final List<Map<String, dynamic>> _tasks = [];
   static final Map<DateTime, int> heatMapDataSet = {};
 
 
@@ -31,7 +31,7 @@ class TaskDatabase {
     final endDate = DateTime.utc(DateTime.now().year - 1, 3, 31);
 
     for (var date = startDate; date.isAfter(endDate);
-    date = date.subtract(Duration(days: 1))) {
+    date = date.subtract(const Duration(days: 1))) {
       final count = _tasks.where((task) {
         final taskDate =
         DateTime.fromMillisecondsSinceEpoch(task['createdAt'].millisecondsSinceEpoch);

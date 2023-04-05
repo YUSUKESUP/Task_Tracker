@@ -18,7 +18,7 @@ class SettingPage extends ConsumerWidget {
       await showDialog (
       context: context,
       builder: (_) {
-      return SimpleDialogPage();
+      return const SimpleDialogPage();
       });
     }
 
@@ -60,7 +60,7 @@ class SettingPage extends ConsumerWidget {
               title: const Text('リマインド'),
             ),
             divider,
-            SizedBox(height: 40,),
+            const SizedBox(height: 40,),
             InkWell(
               onTap: () {
                 withdrawalDialog;

@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AlertDialogPage extends StatefulWidget {
+class AlertDialogPage extends StatelessWidget {
 
   final String title;
   final String message;
   final String btnLabel;
 
-   const AlertDialogPage({
+    AlertDialogPage({
        Key? key,
     required this.title,
     required this.message,
@@ -16,26 +16,19 @@ class AlertDialogPage extends StatefulWidget {
   })
       : super(key: key);
 
-  @override
-  State<AlertDialogPage> createState() => _AlertDialogPageState();
-}
-
-class _AlertDialogPageState extends State<AlertDialogPage> {
-
   // FIXME ストアにアプリを登録したらurlが入れられる
   final  appStoreURL = Uri.parse('https://apps.apple.com/jp/app/id[アプリのApple ID]?mt=8');
-
 
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title:  Text(widget.title),
-      content:  Text(widget.message),
+      title:  Text(title),
+      content:  Text(message),
       actions: <Widget>[
         TextButton(
           child:  Text(
-            widget.btnLabel,
-            style: TextStyle(color: Colors.red),
+            btnLabel,
+            style: const TextStyle(color: Colors.red),
           ),
           onPressed: () async {
             if (await canLaunchUrl(appStoreURL)) {

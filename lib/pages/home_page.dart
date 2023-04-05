@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../data/heatmap_database.dart';
 import '../utils/app_state.dart';
 import '../utils/firebase_provider.dart';
+import '../widget/mordal.dart';
 
 
 class HomePage extends ConsumerWidget {
@@ -162,61 +163,81 @@ class HomePage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-            ),
-            context: context,
-            barrierColor: Colors.black.withOpacity(0.2),
-            builder: (BuildContext ctx) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: controllerProvider,
-                        decoration: InputDecoration(
-                          labelText: '文字を入力してください',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      InkWell(
-                        onTap: () {
-                          ref
-                              .read(appStateProvider.notifier)
-                              .textAdd(controllerProvider.text);
-                          controllerProvider.clear();
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 65,
-                          decoration: BoxDecoration(
-                            color: Colors.indigo,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'タスクを追加',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                 ),
-              );
+                context: context,
+                barrierColor: Colors.black.withOpacity(0.2),
+                builder: (BuildContext ctx) {
+                 return MordalPage(
+                   controller:  controllerProvider,
+                   onPress: () {
+                     ref
+                         .read(appStateProvider.notifier)
+                         .textAdd(controllerProvider.text);
+                         controllerProvider.clear();
+                          Navigator.pop(context);
+                   },
+                   buttonName: 'タスクを追加',);
             },
           );
+
+          // showModalBottomSheet(
+          //   shape: const RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+          //   ),
+          //   context: context,
+          //   barrierColor: Colors.black.withOpacity(0.2),
+          //   builder: (BuildContext ctx) {
+          //     return Padding(
+          //       padding: const EdgeInsets.all(16.0),
+          //       child: SizedBox(
+          //         child: Column(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             TextField(
+          //               keyboardType: TextInputType.emailAddress,
+          //               controller: controllerProvider,
+          //               decoration: InputDecoration(
+          //                 labelText: '文字を入力してください',
+          //                 border: OutlineInputBorder(
+          //                   borderRadius: BorderRadius.circular(12),
+          //                 ),
+          //               ),
+          //             ),
+          //             const SizedBox(height: 40),
+          //             InkWell(
+          //               onTap: () {
+          //                 ref
+          //                     .read(appStateProvider.notifier)
+          //                     .textAdd(controllerProvider.text);
+          //                 controllerProvider.clear();
+          //                 Navigator.pop(context);
+          //               },
+          //               child: Container(
+          //                 height: 65,
+          //                 decoration: BoxDecoration(
+          //                   color: Colors.indigo,
+          //                   borderRadius: BorderRadius.circular(12),
+          //                 ),
+          //                 child: const Center(
+          //                   child: Text(
+          //                     'タスクを追加',
+          //                     style: TextStyle(
+          //                       color: Colors.white,
+          //                       fontSize: 20,
+          //                       fontWeight: FontWeight.bold,
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // );
         },
         shape: const CircleBorder(
             side: BorderSide(color: Colors.black, width: 2.0)),

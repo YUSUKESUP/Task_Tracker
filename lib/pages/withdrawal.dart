@@ -8,11 +8,11 @@ class WithdrawalPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('退会完了'),
+        title: const Text('退会完了'),
       ),
       body: Center(
         child: Column(
-          children: [
+          children: const [
             Text('退会手続きを完了いたしました!'),
             SizedBox(height: 20),
             Text('アプリを終了してください')

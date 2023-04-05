@@ -5,14 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../pages/withdrawal.dart';
 
-class SimpleDialogPage extends StatefulWidget {
+class SimpleDialogPage extends StatelessWidget {
   const SimpleDialogPage({Key? key}) : super(key: key);
-
-  @override
-  State<SimpleDialogPage> createState() => _SimpleDialogPageState();
-}
-
-class _SimpleDialogPageState extends State<SimpleDialogPage> {
 
   void deleteUser() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -34,19 +28,19 @@ class _SimpleDialogPageState extends State<SimpleDialogPage> {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: Text('退会してもよろしいですか?'),
+      title: const Text('退会してもよろしいですか?'),
       children: [
         SimpleDialogOption(
-          child: Text('退会する'),
+          child: const Text('退会する'),
           onPressed: () async {
             deleteUser();
             print('ユーザーを削除しました!');
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => WithdrawalPage()));
+                MaterialPageRoute(builder: (context) => const WithdrawalPage()));
           },
         ),
         SimpleDialogOption(
-          child: Text('キャンセル'),
+          child: const Text('キャンセル'),
           onPressed: () {
             Navigator.pop(context);
           },

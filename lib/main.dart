@@ -36,7 +36,7 @@ void main() async {
 
 
   runApp(
-     ProviderScope(child: MyApp()),
+     const ProviderScope(child: MyApp()),
   );
 }
 
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           context: context,
           barrierDismissible: false,
           builder: (_) {
-            return const AlertDialogPage(
+            return  AlertDialogPage(
                 title: 'バージョン更新のお知らせ',
                 message: '新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい',
                 btnLabel: '今すぐ更新'
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
           .collection('users')
           .doc('')
           .get();
-      final newVersion =  Version.parse(versionDates.data()!['ios_force_app_version'] as String);
+      final  newVersion =  Version.parse(versionDates.data()!['ios_force_app_version'] as String);
 
       //バージョンを比較し、現在のバージョンの方が低ければダイアログを出す
       if (currentVersion < newVersion) {
