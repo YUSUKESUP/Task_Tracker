@@ -40,50 +40,60 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key, });
 
   @override
-  Widget build(BuildContext context,) {
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
 
+  @override
+  void initState() {
+    super.initState();
+    versionCheck();
+  }
 
-    //強制アップデート
-    Future<void> versionCheck() async {
+  //強制アップデート
+  Future<void> versionCheck() async {
 
-      /// ダイアログを表示
-      void showUpdateDialog(BuildContext context) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) {
-            return  AlertDialogPage(
-                title: 'バージョン更新のお知らせ',
-                message: '新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい',
-                btnLabel: '今すぐ更新'
-            );
-          },
-        );
-      }
-
-      //アプリのバージョンを取得
-      final info = await PackageInfo.fromPlatform();
-      final currentVersion = Version.parse(info.version);
-
-      //Firestoreからアップデートしたいバージョンを取得
-      final versionDates = await FirebaseFirestore.instance
-          .collection('users')
-          .doc('')
-          .get();
-      final  newVersion =  Version.parse(versionDates.data()!['ios_force_app_version'] as String);
-
-      //バージョンを比較し、現在のバージョンの方が低ければダイアログを出す
-      if (currentVersion < newVersion) {
-        showUpdateDialog(context);
-      }
+    /// ダイアログを表示
+    void showUpdateDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return  AlertDialogPage(
+              title: 'バージョン更新のお知らせ',
+              message: '新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい',
+              btnLabel: '今すぐ更新'
+          );
+        },
+      );
     }
 
+    //アプリのバージョンを取得
+    final info = await PackageInfo.fromPlatform();
+    final currentVersion = Version.parse(info.version);
+    print(currentVersion);
 
+    //Firestoreからアップデートしたいバージョンを取得
+    final versionDates = await FirebaseFirestore.instance
+        .collection('config')
+        .doc('nu7t69emUsaxYajqJEEE')
+        .get();
+    final  newVersion =  Version.parse(versionDates.data()!['ios_force_app_version'] as String);
+
+    //バージョンを比較し、現在のバージョンの方が低ければダイアログを出す
+    if (currentVersion < newVersion) {
+      showUpdateDialog(context);
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context,) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: TabsPage(),

@@ -28,7 +28,7 @@ class SimpleDialogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const Text('退会してもよろしいですか?'),
+      title: const Text('退会してもよろしいですか？\nデータは全て消去されます。'),
       children: [
         SimpleDialogOption(
           child: const Text('退会する'),

@@ -33,9 +33,7 @@ class MordalPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
                 InkWell(
-                  onTap: () {
-                    onPress;
-                  },
+                  onTap: onPress,
                   child: Container(
                     height: 65,
                     decoration: BoxDecoration(

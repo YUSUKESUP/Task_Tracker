@@ -22,7 +22,9 @@ class HomePage extends ConsumerWidget {
     final controllerProvider = ref.watch(textProvider);
 
 
-   final Map<DateTime,int> heatmapDates = TaskDatabase.heatMapDataSet; // 他のクラスでも heatMapDataSet にアクセス可能
+    TaskDatabase taskDatabase = TaskDatabase();
+    Map<DateTime, int>? heatmapDates =  taskDatabase.fetchHeatMapDateSet();
+
 
     return Scaffold(
       backgroundColor: const Color(0xffFDF3E6),
@@ -32,7 +34,7 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
 
-             MonthlySummary(heatmapDatasets: heatmapDates),
+             MonthlySummary(heatmapDatasets:heatmapDates ),
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
             //   child: SvgPicture.asset(

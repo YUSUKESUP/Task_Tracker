@@ -53,8 +53,8 @@ class SettingPage extends ConsumerWidget {
                 activeColor: Colors.pink,
                 trackColor: Colors.blueGrey,
                 value: firebaseNotifications.valueOrNull?.data()?['shouldNotification'] ?? false,
-                onChanged: (value) {
-                 FirebaseFirestore.instance.collection('users').doc(Uid).update({'shouldNotification':value});
+                onChanged: (value) async {
+                 await FirebaseFirestore.instance.collection('users').doc(Uid).update({'shouldNotification':value});
                 },
               ),
               title: const Text('リマインド'),
@@ -62,9 +62,7 @@ class SettingPage extends ConsumerWidget {
             divider,
             const SizedBox(height: 40,),
             InkWell(
-              onTap: () {
-                withdrawalDialog;
-              },
+              onTap: withdrawalDialog,
               child: Container(
                 height: 55,
                 width: 200,
