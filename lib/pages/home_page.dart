@@ -18,12 +18,16 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final AsyncValue<QuerySnapshot> firebaseTasks = ref.watch(firebaseTasksProvider);
+    final  firebaseTasks = ref.watch(firebaseTasksProvider);
     final controllerProvider = ref.watch(textProvider);
+
+    final firebaseTasksSnapshot = firebaseTasks.valueOrNull;
+    final List<Map<String, dynamic>> firebaseTasksSnapshotLists = [];
+    firebaseTasksSnapshotLists.addAll(firebaseTasksSnapshot?.docs.map((doc) => doc.data())?.toList() ?? []);
 
 
     TaskDatabase taskDatabase = TaskDatabase();
-    Map<DateTime, int>? heatmapDates =  taskDatabase.fetchHeatMapDateSet();
+    Map<DateTime, int>? heatmapDates =  taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
 
     return Scaffold(
@@ -34,7 +38,8 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
 
-             MonthlySummary(heatmapDatasets:heatmapDates ),
+             MonthlySummary(heatmapDatasets:heatmapDates),
+
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
             //   child: SvgPicture.asset(
