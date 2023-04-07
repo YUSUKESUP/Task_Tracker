@@ -29,7 +29,6 @@ class HomePage extends ConsumerWidget {
     TaskDatabase taskDatabase = TaskDatabase();
     Map<DateTime, int>? heatmapDates =  taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
-
     int count = 0;// keyのデフォルト値を設定
 
     if (heatmapDates != null && heatmapDates.isNotEmpty) {
@@ -47,7 +46,7 @@ class HomePage extends ConsumerWidget {
 
              MonthlySummaryHeatMap(
                  heatmapDatasets:heatmapDates,
-               count:count,
+                 value:count,
              ),
 
             // Padding(
@@ -89,7 +88,7 @@ class HomePage extends ConsumerWidget {
                                             controllerProvider
                                                 .text);
                                         controllerProvider.clear();
-
+                                        Navigator.pop(ctx);
                                       },
                                       buttonName: '編集',);
                                   },

@@ -5,10 +5,12 @@ import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 class MonthlySummaryCalemder extends StatelessWidget {
 
   final Map<DateTime, int>? heatmapDatasets;
+  final int value;
 
   MonthlySummaryCalemder({
     super.key,
     required this.heatmapDatasets,
+    required this.value,
   });
 
   @override
@@ -25,10 +27,10 @@ class MonthlySummaryCalemder extends StatelessWidget {
         colorsets: const {
             1: Colors.redAccent,
         },
-      // onClick: (value) {
-      //   ScaffoldMessenger.of(context)
-      //       .showSnackBar(SnackBar(content: Text(value.toString())));
-      // },
+      onClick: (value) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(value.toString())));
+      },
       ),
     );
   }

@@ -5,12 +5,12 @@ import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 class MonthlySummaryHeatMap extends StatelessWidget {
 
   final Map<DateTime, int>? heatmapDatasets;
-  final int count;
+  final int value;
 
    MonthlySummaryHeatMap({
     super.key,
      required this.heatmapDatasets,
-     required this.count,
+     required this.value,
   });
 
 
@@ -33,9 +33,9 @@ class MonthlySummaryHeatMap extends StatelessWidget {
         colorsets: const {
           1: Colors.redAccent,
         },
-        onClick: (count) {
+        onClick: (value) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('コミット数は$countです')));
+              .showSnackBar(SnackBar(content: Text(value.toString())));
         },
       ),
     );
