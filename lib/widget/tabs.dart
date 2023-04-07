@@ -6,14 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../pages/setting.dart';
 
-
 class TabsPage extends ConsumerWidget {
   const TabsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-
-
+  Widget build(BuildContext context, WidgetRef ref) {
     const selectedColor = Colors.black;
     const unselectedColor = Color(0xff5f6368);
 
@@ -30,6 +27,7 @@ class TabsPage extends ConsumerWidget {
               ),
             ),
             backgroundColor: const Color(0xffFDF3E6),
+            centerTitle: true,
             elevation: 0,
             actions: [
               Padding(
@@ -37,21 +35,20 @@ class TabsPage extends ConsumerWidget {
                 child: IconButton(
                   icon: const Icon(Icons.settings),
                   color: Colors.black,
-                  onPressed: () =>
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return   SettingPage();
-                          },
-                        ),
-                      ),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SettingPage();
+                      },
+                    ),
+                  ),
                 ),
               ),
             ]),
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Column(
-            children:  [
+            children: [
               Container(
                 color: const Color(0xffFDF3E6),
                 child: const TabBar(
@@ -60,7 +57,6 @@ class TabsPage extends ConsumerWidget {
                   labelColor: selectedColor,
                   indicatorColor: selectedColor,
                   indicator: BoxDecoration(
-
                     border: Border(
                       bottom: BorderSide(
                         width: 3,

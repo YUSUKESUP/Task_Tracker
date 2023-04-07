@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'firebase_provider.dart';
@@ -41,6 +42,25 @@ class AppState extends StateNotifier<dynamic> {
         .doc(document.id)
         .delete();
   }
+
+
+  void deleteUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final uid = user?.uid;
+    final msg =
+    await FirebaseFirestore.instance.collection('users').doc(uid).delete();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('memos')
+        .doc(uid)
+        .delete();
+    // ユーザーを削除
+    await user?.delete();
+    await FirebaseAuth.instance.signOut();
+  }
+
+
 
 
 }

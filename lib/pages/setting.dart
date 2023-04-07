@@ -32,8 +32,8 @@ class SettingPage extends ConsumerWidget {
     return Scaffold(
         backgroundColor: const Color(0xffFDF3E6),
         appBar: AppBar(
-          backgroundColor: const Color(0xffFDF3E6), centerTitle: true,
-
+          backgroundColor: const Color(0xffFDF3E6),
+          centerTitle: true,
           leading: IconButton(
             color: Colors.black,
             icon: const Icon(Icons.arrow_back),

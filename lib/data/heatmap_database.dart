@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_crud/utils/firebase_provider.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,19 +12,6 @@ class TaskDatabase {
         .now().year,4);
 
     const int MaxDaysInMonth = 365;
-    //スタートからエンドまでエンドまで0を入れる
-    // map[DateTime.now().copyWith(month: 4,day: 1)] = 0;
-
-    // final List<Map<String, dynamic>> tasks = [];
-    //
-    // final subCollectionRef = FirebaseFirestore.instance
-    //     .collection('users')
-    //     .doc(Uid)
-    //     .collection('memos');
-    //
-    // final taskDatas = await subCollectionRef.get();
-    //
-    // tasks.addAll(taskDatas.docs.map((doc) => doc.data()).toList());
 
 
     for (var i = 0; i < MaxDaysInMonth; i++) {
