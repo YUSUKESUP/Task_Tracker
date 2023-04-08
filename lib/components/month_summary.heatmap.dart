@@ -24,7 +24,7 @@ class MonthlySummaryHeatMap extends StatelessWidget {
         startDate: DateTime.now().subtract(const Duration(days: 60)),
         endDate: DateTime.now().add(const Duration(days: 20)),
          datasets:heatmapDatasets ,
-        defaultColor: Colors.grey[300],
+        defaultColor: Colors.white38,
         textColor: Colors.black,
         showColorTip: true,
         showText: false,
