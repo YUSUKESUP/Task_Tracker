@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 
-
 class MonthlySummaryCalemder extends StatelessWidget {
-
   final Map<DateTime, int>? heatmapDatasets;
   final int value;
 
@@ -15,7 +13,7 @@ class MonthlySummaryCalemder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    //ヒーマップカレンダー
     return Container(
       padding: const EdgeInsets.only(bottom: 15),
       child: HeatMapCalendar(
@@ -23,17 +21,15 @@ class MonthlySummaryCalemder extends StatelessWidget {
         textColor: Colors.black,
         showColorTip: true,
         colorMode: ColorMode.opacity,
-        datasets:heatmapDatasets ,
+        datasets: heatmapDatasets,
         colorsets: const {
-            1: Colors.redAccent,
+          1: Colors.redAccent,
         },
-      onClick: (value) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(value.toString())));
-      },
+        onClick: (value) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(value.toString())));
+        },
       ),
     );
   }
 }
-
-

@@ -8,46 +8,45 @@ import '../utils/app_state.dart';
 import '../utils/firebase_provider.dart';
 import '../widget/mordal.dart';
 
-
 class HomePage extends ConsumerWidget {
-
-   const HomePage({
+  const HomePage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final  firebaseTasks = ref.watch(firebaseTasksProvider);
+    final firebaseTasks = ref.watch(firebaseTasksProvider);
     final controllerProvider = ref.watch(textProvider);
 
+    //firebaseTasksの値ををfirebaseTasksSnapshotListsへ
     final firebaseTasksSnapshot = firebaseTasks.valueOrNull;
     final List<Map<String, dynamic>> firebaseTasksSnapshotLists = [];
-    firebaseTasksSnapshotLists.addAll(firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
+    firebaseTasksSnapshotLists.addAll(
+        firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 
-
+    //fetchHeatMapDateSetを呼び出し引数を渡す
     TaskDatabase taskDatabase = TaskDatabase();
-    Map<DateTime, int>? heatmapDates =  taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
+    Map<DateTime, int>? heatmapDates =
+        taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
-    int count = 0;// keyのデフォルト値を設定
+    int count = 0; // keyのデフォルト値を設定
 
     if (heatmapDates != null && heatmapDates.isNotEmpty) {
-      count = heatmapDates.values.elementAt(0); // heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
+      count = heatmapDates.values
+          .elementAt(0); // heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
     }
-
 
     return Scaffold(
       backgroundColor: const Color(0xffFDF3E6),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-
-             MonthlySummaryHeatMap(
-                 heatmapDatasets:heatmapDates,
-                 value:count,
-             ),
+            //ヒートマップ
+            MonthlySummaryHeatMap(
+              heatmapDatasets: heatmapDates,
+              value: count,
+            ),
 
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
@@ -72,25 +71,24 @@ class HomePage extends ConsumerWidget {
                               onPressed: (context) {
                                 showModalBottomSheet(
                                   shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25)),
                                   ),
                                   context: context,
                                   barrierColor: Colors.black.withOpacity(0.2),
                                   builder: (BuildContext ctx) {
                                     return MordalPage(
-                                      controller:  controllerProvider,
+                                      controller: controllerProvider,
                                       onPress: () {
                                         ref
-                                            .read(appStateProvider
-                                            .notifier)
-                                            .textUpdate(
-                                            document,
-                                            controllerProvider
-                                                .text);
+                                            .read(appStateProvider.notifier)
+                                            .textUpdate(document,
+                                                controllerProvider.text);
                                         controllerProvider.clear();
                                         Navigator.pop(ctx);
                                       },
-                                      buttonName: '編集',);
+                                      buttonName: '編集',
+                                    );
                                   },
                                 );
                               },
@@ -124,18 +122,22 @@ class HomePage extends ConsumerWidget {
                                   activeColor: Colors.black,
                                   value: document['isDone'],
                                   onChanged: (bool? value) {
-                                    FirebaseFirestore.instance.collection('users').doc(Uid).collection('memos').doc(document.id).update({'isDone':value});
+                                    FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(Uid)
+                                        .collection('memos')
+                                        .doc(document.id)
+                                        .update({'isDone': value});
                                   },
                                 ),
-                                title: Text(document['text'],
+                                title: Text(
+                                  document['text'],
                                   overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                   decoration:document['isDone'] ?? false
-                                       ? TextDecoration.lineThrough
-                                       : TextDecoration.none
-
+                                  style: TextStyle(
+                                      decoration: document['isDone'] ?? false
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none),
                                 ),
-                                  ),
                               ),
                             ),
                           ),
@@ -158,22 +160,23 @@ class HomePage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                ),
-                context: context,
-                barrierColor: Colors.black.withOpacity(0.2),
-                builder: (BuildContext ctx) {
-                 return MordalPage(
-                   controller:  controllerProvider,
-                   onPress: () {
-                     ref
-                         .read(appStateProvider.notifier)
-                         .textAdd(controllerProvider.text);
-                         controllerProvider.clear();
-                          Navigator.pop(context);
-                   },
-                   buttonName: 'タスクを追加',);
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+            ),
+            context: context,
+            barrierColor: Colors.black.withOpacity(0.2),
+            builder: (BuildContext ctx) {
+              return MordalPage(
+                controller: controllerProvider,
+                onPress: () {
+                  ref
+                      .read(appStateProvider.notifier)
+                      .textAdd(controllerProvider.text);
+                  controllerProvider.clear();
+                  Navigator.pop(context);
+                },
+                buttonName: 'タスクを追加',
+              );
             },
           );
         },
@@ -185,5 +188,3 @@ class HomePage extends ConsumerWidget {
     );
   }
 }
-
-

@@ -3,30 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AlertDialogPage extends StatelessWidget {
-
   final String title;
   final String message;
   final String btnLabel;
 
-    AlertDialogPage({
-       Key? key,
+  AlertDialogPage({
+    Key? key,
     required this.title,
     required this.message,
     required this.btnLabel,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   // FIXME ストアにアプリを登録したらurlが入れられる
-  final  appStoreURL = Uri.parse('https://apps.apple.com/jp/app/id[アプリのApple ID]?mt=8');
+  final appStoreURL =
+      Uri.parse('https://apps.apple.com/jp/app/id[6447428420]?mt=8');
 
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title:  Text(title),
-      content:  Text(message),
+      title: Text(title),
+      content: Text(message),
       actions: <Widget>[
         TextButton(
-          child:  Text(
+          child: Text(
             btnLabel,
             style: const TextStyle(color: Colors.red),
           ),

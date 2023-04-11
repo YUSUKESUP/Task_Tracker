@@ -1,6 +1,4 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_crud/components/month_summary.heatmap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -8,49 +6,43 @@ import '../components/month_summary.calender.dart';
 import '../data/heatmap_database.dart';
 import '../utils/app_state.dart';
 import '../utils/firebase_provider.dart';
-
-
 import '../widget/mordal.dart';
 
-
 class CalenderPage extends ConsumerWidget {
-
   const CalenderPage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final  firebaseTasks = ref.watch(firebaseTasksProvider);
+    final firebaseTasks = ref.watch(firebaseTasksProvider);
     final controllerProvider = ref.watch(textProvider);
 
     final firebaseTasksSnapshot = firebaseTasks.valueOrNull;
     final List<Map<String, dynamic>> firebaseTasksSnapshotLists = [];
-    firebaseTasksSnapshotLists.addAll(firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
-
+    firebaseTasksSnapshotLists.addAll(
+        firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 
     TaskDatabase taskDatabase = TaskDatabase();
-    Map<DateTime, int>? heatmapDates =  taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
+    Map<DateTime, int>? heatmapDates =
+        taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
-    int count = 0;// keyのデフォルト値を設定
+    int count = 0;
 
     if (heatmapDates != null && heatmapDates.isNotEmpty) {
-      count = heatmapDates.values.elementAt(0); // heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
+      count = heatmapDates.values.elementAt(0);
     }
-
 
     return Scaffold(
       backgroundColor: const Color(0xffFDF3E6),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-
+            //カレンダー
             MonthlySummaryCalemder(
-              heatmapDatasets:heatmapDates,
-              value:count,
+              heatmapDatasets: heatmapDates,
+              value: count,
             ),
 
             // Padding(
@@ -76,25 +68,24 @@ class CalenderPage extends ConsumerWidget {
                               onPressed: (context) {
                                 showModalBottomSheet(
                                   shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25)),
                                   ),
                                   context: context,
                                   barrierColor: Colors.black.withOpacity(0.2),
                                   builder: (BuildContext ctx) {
                                     return MordalPage(
-                                      controller:  controllerProvider,
+                                      controller: controllerProvider,
                                       onPress: () {
                                         ref
-                                            .read(appStateProvider
-                                            .notifier)
-                                            .textUpdate(
-                                            document,
-                                            controllerProvider
-                                                .text);
+                                            .read(appStateProvider.notifier)
+                                            .textUpdate(document,
+                                                controllerProvider.text);
                                         controllerProvider.clear();
                                         Navigator.pop(ctx);
                                       },
-                                      buttonName: '編集',);
+                                      buttonName: '編集',
+                                    );
                                   },
                                 );
                               },
@@ -128,17 +119,21 @@ class CalenderPage extends ConsumerWidget {
                                   activeColor: Colors.black,
                                   value: document['isDone'],
                                   onChanged: (bool? value) {
-                                    FirebaseFirestore.instance.collection('users').doc(Uid).collection('memos').doc(document.id).update({'isDone':value});
+                                    FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(Uid)
+                                        .collection('memos')
+                                        .doc(document.id)
+                                        .update({'isDone': value});
                                   },
                                 ),
-                                title: Text(document['text'],
+                                title: Text(
+                                  document['text'],
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      decoration:document['isDone'] ?? false
+                                      decoration: document['isDone'] ?? false
                                           ? TextDecoration.lineThrough
-                                          : TextDecoration.none
-
-                                  ),
+                                          : TextDecoration.none),
                                 ),
                               ),
                             ),
@@ -167,9 +162,9 @@ class CalenderPage extends ConsumerWidget {
             ),
             context: context,
             barrierColor: Colors.black.withOpacity(0.2),
-            builder: (BuildContext ctx) {
+            builder: (BuildContext context) {
               return MordalPage(
-                controller:  controllerProvider,
+                controller: controllerProvider,
                 onPress: () {
                   ref
                       .read(appStateProvider.notifier)
@@ -177,7 +172,8 @@ class CalenderPage extends ConsumerWidget {
                   controllerProvider.clear();
                   Navigator.pop(context);
                 },
-                buttonName: 'タスクを追加',);
+                buttonName: 'タスクを追加',
+              );
             },
           );
         },
@@ -189,5 +185,3 @@ class CalenderPage extends ConsumerWidget {
     );
   }
 }
-
-

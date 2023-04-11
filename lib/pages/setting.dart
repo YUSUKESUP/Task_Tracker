@@ -8,20 +8,18 @@ import '../widget/shimple_dialog.dart';
 class SettingPage extends ConsumerWidget {
   SettingPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final firebaseNotifications = ref.watch(firebaseNotificationsProvider);
 
-    final  firebaseNotifications = ref.watch(firebaseNotificationsProvider);
-
-    Future<void> withdrawalDialog()  async {
-      await showDialog (
-      context: context,
-      builder: (_) {
-      return const SimpleDialogPage();
-      });
+    //退会ダイアログ
+    Future<void> withdrawalDialog() async {
+      await showDialog(
+          context: context,
+          builder: (_) {
+            return const SimpleDialogPage();
+          });
     }
-
 
     const divider = Divider(
       thickness: 2,
@@ -41,10 +39,10 @@ class SettingPage extends ConsumerWidget {
               Navigator.pop(context);
             },
           ),
-          title: const Text('設定',
+          title: const Text(
+            '設定',
             style: TextStyle(color: Colors.black),
           ),
-
         ),
         body: Column(
           children: [
@@ -52,15 +50,22 @@ class SettingPage extends ConsumerWidget {
               trailing: CupertinoSwitch(
                 activeColor: Colors.pink,
                 trackColor: Colors.blueGrey,
-                value: firebaseNotifications.valueOrNull?.data()?['shouldNotification'] ?? false,
+                value: firebaseNotifications.valueOrNull
+                        ?.data()?['shouldNotification'] ??
+                    false,
                 onChanged: (value) async {
-                 await FirebaseFirestore.instance.collection('users').doc(Uid).update({'shouldNotification':value});
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(Uid)
+                      .update({'shouldNotification': value});
                 },
               ),
               title: const Text('リマインド'),
             ),
             divider,
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             InkWell(
               onTap: withdrawalDialog,
               child: Container(
@@ -83,7 +88,6 @@ class SettingPage extends ConsumerWidget {
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }
