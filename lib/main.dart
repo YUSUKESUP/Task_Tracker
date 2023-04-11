@@ -32,6 +32,8 @@ void main() async {
         .set({'uid': uid, 'shouldNotification': false});
   }
 
+
+  //プッシュ通知
   final messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
     alert: true,
