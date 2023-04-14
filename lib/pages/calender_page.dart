@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../components/month_summary.calender.dart';
 import '../data/heatmap_database.dart';
-import '../utils/app_state.dart';
-import '../utils/firebase_provider.dart';
+import '../state/app_state.dart';
+import '../state/firebase_provider.dart';
 import '../widget/mordal.dart';
 
 class CalenderPage extends ConsumerWidget {

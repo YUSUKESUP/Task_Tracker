@@ -48,6 +48,15 @@ void main() async {
   final token = await messaging.getToken();
   print('🐯 FCM TOKEN: $token');
 
+  final user = FirebaseAuth.instance.currentUser;
+  final uid = user?.uid;
+  final setToken = FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .set({'fcmToken':token});
+
+
+
   runApp(
     const ProviderScope(child: MyApp()),
   );

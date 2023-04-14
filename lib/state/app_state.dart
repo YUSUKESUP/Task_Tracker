@@ -12,6 +12,8 @@ class AppState extends StateNotifier<dynamic> {
 
   AppState(this._ref) : super([]);
 
+
+  //タスク追加
   Future<void> textAdd(String text) async {
     final ref = await _ref
         .read(firebaseProvider)

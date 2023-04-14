@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../pages/withdrawal.dart';
-import '../utils/app_state.dart';
+import '../state/app_state.dart';
+
 
 class SimpleDialogPage extends ConsumerWidget {
   const SimpleDialogPage({Key? key}) : super(key: key);
