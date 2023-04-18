@@ -10,6 +10,7 @@ class SettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final firebaseNotifications = ref.watch(firebaseNotificationsProvider);
 
     //退会ダイアログ
@@ -28,9 +29,9 @@ class SettingPage extends ConsumerWidget {
     );
 
     return Scaffold(
-        backgroundColor: const Color(0xffFDF3E6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: const Color(0xffFDF3E6),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           centerTitle: true,
           leading: IconButton(
             color: Colors.black,

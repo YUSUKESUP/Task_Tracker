@@ -37,7 +37,7 @@ class HomePage extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xffFDF3E6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -47,15 +47,6 @@ class HomePage extends ConsumerWidget {
               heatmapDatasets: heatmapDates,
               value: count,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 72.0),
-            //   child: SvgPicture.asset(
-            //     'assets/undraw_add_files_re_v09g.svg',
-            //     semanticsLabel: 'shopping',
-            //     width: 200,
-            //     height: 200,
-            //   ),
-            // ),
             firebaseTasks.when(
               data: (QuerySnapshot query) {
                 return Expanded(
@@ -120,12 +111,9 @@ class HomePage extends ConsumerWidget {
                                   activeColor: Colors.black,
                                   value: document['isDone'],
                                   onChanged: (bool? value) {
-                                    FirebaseFirestore.instance
-                                        .collection('users')
-                                        .doc(Uid)
-                                        .collection('memos')
-                                        .doc(document.id)
-                                        .update({'isDone': value});
+                                    ref
+                                        .read(appStateProvider.notifier)
+                                        .isDoneTasks(document,value ?? false);
                                   },
                                 ),
                                 title: Text(
@@ -154,34 +142,6 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-            ),
-            context: context,
-            barrierColor: Colors.black.withOpacity(0.2),
-            builder: (BuildContext ctx) {
-              return MordalPage(
-                controller: controllerProvider,
-                onPress: () {
-                  ref
-                      .read(appStateProvider.notifier)
-                      .textAdd(controllerProvider.text);
-                  controllerProvider.clear();
-                  Navigator.pop(context);
-                },
-                buttonName: 'タスクを追加',
-              );
-            },
-          );
-        },
-        shape: const CircleBorder(
-            side: BorderSide(color: Colors.black, width: 2.0)),
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.add, color: Colors.black),
       ),
     );
   }

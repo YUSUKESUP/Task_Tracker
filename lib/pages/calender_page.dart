@@ -34,7 +34,7 @@ class CalenderPage extends ConsumerWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xffFDF3E6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -44,17 +44,6 @@ class CalenderPage extends ConsumerWidget {
               heatmapDatasets: heatmapDates,
               value: count,
             ),
-
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 72.0),
-            //   child: SvgPicture.asset(
-            //     'assets/undraw_add_files_re_v09g.svg',
-            //     semanticsLabel: 'shopping',
-            //     width: 200,
-            //     height: 200,
-            //   ),
-            // ),
-
             firebaseTasks.when(
               data: (QuerySnapshot query) {
                 return Expanded(
@@ -153,34 +142,6 @@ class CalenderPage extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-            ),
-            context: context,
-            barrierColor: Colors.black.withOpacity(0.2),
-            builder: (BuildContext context) {
-              return MordalPage(
-                controller: controllerProvider,
-                onPress: () {
-                  ref
-                      .read(appStateProvider.notifier)
-                      .textAdd(controllerProvider.text);
-                  controllerProvider.clear();
-                  Navigator.pop(context);
-                },
-                buttonName: 'タスクを追加',
-              );
-            },
-          );
-        },
-        shape: const CircleBorder(
-            side: BorderSide(color: Colors.black, width: 2.0)),
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.add, color: Colors.black),
       ),
     );
   }

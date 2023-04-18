@@ -4,14 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../pages/setting.dart';
+import '../state/app_state.dart';
+import '../state/firebase_provider.dart';
+import 'mordal.dart';
 
 class TabsPage extends ConsumerWidget {
   const TabsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    //タブ
     const selectedColor = Colors.black;
     const unselectedColor = Color(0xff5f6368);
+
+    final controllerProvider = ref.watch(textProvider);
 
     return DefaultTabController(
       length: 2,
@@ -25,7 +32,7 @@ class TabsPage extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            backgroundColor: const Color(0xffFDF3E6),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             centerTitle: true,
             elevation: 0,
             actions: [
@@ -49,7 +56,7 @@ class TabsPage extends ConsumerWidget {
           child: Column(
             children: [
               Container(
-                color: const Color(0xffFDF3E6),
+                color: Theme.of(context).primaryColor,
                 child: const TabBar(
                   indicatorSize: TabBarIndicatorSize.label,
                   unselectedLabelColor: unselectedColor,
@@ -79,6 +86,34 @@ class TabsPage extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showModalBottomSheet(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              ),
+              context: context,
+              barrierColor: Colors.black.withOpacity(0.2),
+              builder: (BuildContext context) {
+                return MordalPage(
+                  controller: controllerProvider,
+                  onPress: () {
+                    ref
+                        .read(appStateProvider.notifier)
+                        .textAdd(controllerProvider.text);
+                    controllerProvider.clear();
+                    Navigator.pop(context);
+                  },
+                  buttonName: 'タスクを追加',
+                );
+              },
+            );
+          },
+          shape: const CircleBorder(
+              side: BorderSide(color: Colors.black, width: 2.0)),
+          backgroundColor: Colors.white,
+          child: const Icon(Icons.add, color: Colors.black),
         ),
       ),
     );

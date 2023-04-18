@@ -8,11 +8,11 @@ class WithdrawalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFDF3E6),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: const Color(0xffFDF3E6),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         title: const Text(
           '退会完了',

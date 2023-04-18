@@ -65,4 +65,15 @@ class AppState extends StateNotifier<dynamic> {
     await user?.delete();
     await FirebaseAuth.instance.signOut();
   }
+
+  //タスクが完了しているか
+  Future<void> isDoneTasks(dynamic document, bool value) async {
+    await _ref
+        .read(firebaseProvider)
+        .collection('users')
+        .doc(Uid)
+        .collection('memos')
+        .doc(document.id)
+        .update({'isDone': value});
+  }
 }

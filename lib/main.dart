@@ -10,11 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
-  // runZonedGuardedで新しいゾーンを定義
+
   await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
@@ -47,9 +46,11 @@ void main() async {
       sound: true,
     );
 
+    //トークンを取得
     final token = await messaging.getToken();
     print('🐯 FCM TOKEN: $token');
 
+    //取得したトークンをセット
     final user = FirebaseAuth.instance.currentUser;
     final uid = user?.uid;
     final setToken = FirebaseFirestore.instance
@@ -121,9 +122,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(
-    BuildContext context,
-  ) {
-    return const MaterialApp(
+    BuildContext context,) {
+    return  MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xffFDF3E6),
+        scaffoldBackgroundColor:  Color(0xffFDF3E6),
+      ),
+
       debugShowCheckedModeBanner: false,
       home: TabsPage(),
     );
