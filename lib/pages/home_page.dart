@@ -47,7 +47,6 @@ class HomePage extends ConsumerWidget {
               heatmapDatasets: heatmapDates,
               value: count,
             ),
-
             // Padding(
             //   padding: const EdgeInsets.only(top: 72.0),
             //   child: SvgPicture.asset(
@@ -57,7 +56,6 @@ class HomePage extends ConsumerWidget {
             //     height: 200,
             //   ),
             // ),
-
             firebaseTasks.when(
               data: (QuerySnapshot query) {
                 return Expanded(
