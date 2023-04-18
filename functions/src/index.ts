@@ -4,7 +4,7 @@ import * as admin from "firebase-admin";
 admin.initializeApp(functions.config().firebase);
 
 // 朝の8時に実行
-export const timer = functions.pubsub.schedule("0 8 * * *").onRun(async (context) => {
+export const timer = functions.pubsub.schedule("0 8 * * *").timeZone("Asia/Tokyo").onRun(async (context) => {
   try {
     functions.logger.info("timer start", {structuredData: true});
 
