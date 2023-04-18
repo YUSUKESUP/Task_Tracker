@@ -55,8 +55,7 @@ void main() async {
     final setToken = FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
-        .set({'fcmToken':token});
-
+        .set({'fcmToken': token});
 
     //Flutterでキャッチされた例外/エラー
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
