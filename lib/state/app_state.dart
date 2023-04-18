@@ -76,4 +76,13 @@ class AppState extends StateNotifier<dynamic> {
         .doc(document.id)
         .update({'isDone': value});
   }
+
+  //スイッチの切り替え
+  Future<void> upDateSwitch(bool value) async {
+    await _ref
+        .read(firebaseProvider)
+        .collection('users')
+        .doc(Uid)
+        .update({'shouldNotification': value});
+  }
 }

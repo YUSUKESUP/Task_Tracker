@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../state/app_state.dart';
 import '../state/firebase_provider.dart';
 import '../widget/shimple_dialog.dart';
 
@@ -51,14 +52,12 @@ class SettingPage extends ConsumerWidget {
               trailing: CupertinoSwitch(
                 activeColor: Colors.pink,
                 trackColor: Colors.blueGrey,
-                value: firebaseNotifications.valueOrNull
-                        ?.data()?['shouldNotification'] ??
-                    false,
+                value: firebaseNotifications.valueOrNull?.
+                data()?['shouldNotification'] ?? false,
                 onChanged: (value) async {
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(Uid)
-                      .update({'shouldNotification': value});
+                  ref
+                      .read(appStateProvider.notifier)
+                      .upDateSwitch(value);
                 },
               ),
               title: const Text('リマインド'),
