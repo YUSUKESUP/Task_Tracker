@@ -27,6 +27,10 @@ final uidProvider = Provider((ref) {
   return user?.uid;
 });
 
+/// Memoクラスは作った方が良い
+/// Flutterの教科書を参考にしてください。
+/// withConverterを使って変換するところまでやろう。
+
 final firebaseTasksProvider = StreamProvider.autoDispose((ref) {
   final uid = ref.watch(uidProvider);
   return FirebaseFirestore.instance
