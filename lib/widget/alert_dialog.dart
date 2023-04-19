@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// AlertDialogWidgetのただのラッパーだと勘違いされる名前はやめよう。
+/// 強制アップデートのために作られたWidgetであることがわかる名前をつけよう。
 class AlertDialogPage extends StatelessWidget {
   final String title;
   final String message;
@@ -30,6 +32,8 @@ class AlertDialogPage extends StatelessWidget {
             style: const TextStyle(color: Colors.red),
           ),
           onPressed: () async {
+            /// Androidのことを思い出してください。
+            // Platform.isAndroid
             if (await canLaunchUrl(appStoreURL)) {
               await launchUrl(
                 appStoreURL,

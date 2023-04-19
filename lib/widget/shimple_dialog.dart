@@ -5,7 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../pages/withdrawal.dart';
 import '../state/app_state.dart';
 
-
+/// 全然シンプルじゃない。
+/// 退会させてもうとる。
+/// 退会するためのダイアログであることがわかるクラス名にしてほしい
+/// ほんとに。
 class SimpleDialogPage extends ConsumerWidget {
   const SimpleDialogPage({Key? key}) : super(key: key);
 
@@ -27,9 +30,11 @@ class SimpleDialogPage extends ConsumerWidget {
           onPressed: () async {
             ref.read(appStateProvider.notifier).deleteUser();
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const WithdrawalPage()));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WithdrawalPage(),
+              ),
+            );
           },
         ),
       ],

@@ -1,17 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crud/components/month_summary.calender.dart';
 import 'package:firebase_crud/components/month_summary.heatmap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 import '../data/heatmap_database.dart';
 import '../state/app_state.dart';
 import '../state/firebase_provider.dart';
 import '../widget/mordal.dart';
 
+enum MonthlySummaryMode {
+  heatMap,
+  calender,
+}
+
 class HomePage extends ConsumerWidget {
   const HomePage({
     Key? key,
+    required this.monthlySummaryMode,
   }) : super(key: key);
+
+  final MonthlySummaryMode monthlySummaryMode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,10 +53,17 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
             //ヒートマップ
-            MonthlySummaryHeatMap(
-              heatmapDatasets: heatmapDates,
-              value: count,
-            ),
+
+            if (monthlySummaryMode == MonthlySummaryMode.heatMap)
+              MonthlySummaryHeatMap(
+                heatmapDatasets: heatmapDates,
+                value: count,
+              )
+            else
+              MonthlySummaryCalemder(
+                heatmapDatasets: heatmapDates,
+                value: count,
+              ),
             firebaseTasks.when(
               data: (QuerySnapshot query) {
                 return Expanded(
@@ -113,7 +130,7 @@ class HomePage extends ConsumerWidget {
                                   onChanged: (bool? value) {
                                     ref
                                         .read(appStateProvider.notifier)
-                                        .isDoneTasks(document,value ?? false);
+                                        .isDoneTasks(document, value ?? false);
                                   },
                                 ),
                                 title: Text(

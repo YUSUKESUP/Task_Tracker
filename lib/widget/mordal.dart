@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MordalPage extends StatelessWidget {
@@ -15,12 +14,14 @@ class MordalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ここで textEditingController を watch すればいいのでは？
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            /// テキストーフィールドが、キーボードの裏に隠れてしまう
             TextField(
               keyboardType: TextInputType.emailAddress,
               controller: controller,

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
-
   await runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
@@ -48,15 +50,30 @@ void main() async {
 
     //トークンを取得
     final token = await messaging.getToken();
+
+    // print文は使わないようにしよう。
+    // なぜなら、print文で出力した内容はリリースされたアプリを通して誰でも見ることができるから。
     print('🐯 FCM TOKEN: $token');
+
+    // log なら見れない。
+    // なにかしらの log パッケージを使っても良い。すささんのとか。
+    log('🐯 FCM TOKEN: $token');
 
     //取得したトークンをセット
     final user = FirebaseAuth.instance.currentUser;
     final uid = user?.uid;
-    final setToken = FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .set({'fcmToken': token});
+
+    // 確実にいるかもしれないけど、nullチェックはしたほうが良さそう。
+    // set すると他のフィールドバリューは全部消えてしまうよ
+    // だからこれが実行されたら fcmToken フィールドしかないドキュメントになってしまう。
+    // set と updateの違いを復習したほうがよい。
+    // SetOptions(merge: true) にすれば、マージされるので、他のフィールドが消えることはない。
+    if (uid != null) {
+      final setToken = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .set({'fcmToken': token}, SetOptions(merge: true));
+    }
 
     //Flutterでキャッチされた例外/エラー
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
@@ -87,6 +104,8 @@ class _MyAppState extends State<MyApp> {
 
   //強制アップデート
   Future<void> versionCheck() async {
+    /// 関数の中で関数をさらに定義する必要はないのでは？
+    /// クラスの中に書けば良さそう
     /// ダイアログを表示
     void showUpdateDialog(BuildContext context) {
       showDialog(
@@ -111,6 +130,10 @@ class _MyAppState extends State<MyApp> {
         .collection('config')
         .doc('nu7t69emUsaxYajqJEEE')
         .get();
+
+    /// field名の命名は具体的でいいと思う。
+    /// 変数名もフィールド名に寄せてしまってよいよ。
+    /// ちぐはぐな名前をつけるとコードを読むのが大変でバグにもつながる。
     final newVersion =
         Version.parse(versionDates.data()!['ios_force_app_version'] as String);
 
@@ -122,15 +145,34 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(
-    BuildContext context,) {
-    return  MaterialApp(
+    BuildContext context,
+  ) {
+    return MaterialApp(
       theme: ThemeData(
+        /// Color(0xffFDF3E6) 同じ色であることに意味があるならどこかで変数としてまとめたほうがよい。
+        /// const primaryColor = Color(0xffFDF3E6);
+        /// など。
         primaryColor: Color(0xffFDF3E6),
-        scaffoldBackgroundColor:  Color(0xffFDF3E6),
+        scaffoldBackgroundColor: Color(0xffFDF3E6),
       ),
-
       debugShowCheckedModeBanner: false,
       home: TabsPage(),
     );
   }
 }
+
+
+/// 選択肢1 グローバル変数にしてしまう。
+/// ファイルは別に作ったほうが良さそう app_colors.dart とか
+/// const primaryColor = Color(0xffFDF3E6);
+/// 
+/// 選択肢2 変数をまとめるためのクラスを作る。
+/// クラスにすると、候補を見つけやすいかもしれない。
+/// ```dart
+/// class AppColors {
+///   static const primaryColor = ...
+///   static const secondaryColor = ...
+/// }
+/// 
+/// AppColors. と打てば、どんな色が定義されているのか一覧を見ることができて便利かも
+/// ```
