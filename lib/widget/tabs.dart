@@ -1,23 +1,27 @@
 import 'package:firebase_crud/pages/calender_page.dart';
 import 'package:firebase_crud/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import '../pages/setting.dart';
 import '../state/app_state.dart';
 import '../state/firebase_provider.dart';
-import 'mordal.dart';
+import 'mordal.dart'; // modal が正しい　スペルチェッカー入ってなければ入れよう。
 
 class TabsPage extends ConsumerWidget {
   const TabsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     //タブ
     const selectedColor = Colors.black;
     const unselectedColor = Color(0xff5f6368);
 
+    /// このちぐはぐな変数はよくなさそう
+    /// textProvider から controllerProvider がでてきたらびっくりせえへん？
+    /// textEditingControllerProvider -> textEditingController ならわかる。
+    /// 他の人が読んで意味が伝わるか？　を常にチェックするといい。
     final controllerProvider = ref.watch(textProvider);
 
     return DefaultTabController(
