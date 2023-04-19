@@ -1,4 +1,3 @@
-import 'package:firebase_crud/pages/calender_page.dart';
 import 'package:firebase_crud/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,11 +79,15 @@ class TabsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: TabBarView(
                   children: [
-                    HomePage(),
-                    CalenderPage(),
+                    HomePage(
+                      monthlySummaryMode: MonthlySummaryMode.heatMap,
+                    ),
+                    HomePage(
+                      monthlySummaryMode: MonthlySummaryMode.calender,
+                    ),
                   ],
                 ),
               ),

@@ -30,9 +30,11 @@ class SimpleDialogPage extends ConsumerWidget {
           onPressed: () async {
             ref.read(appStateProvider.notifier).deleteUser();
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const WithdrawalPage()));
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WithdrawalPage(),
+              ),
+            );
           },
         ),
       ],
