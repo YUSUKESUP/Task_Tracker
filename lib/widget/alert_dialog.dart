@@ -16,7 +16,7 @@ class AlertDialogPage extends StatelessWidget {
 
   // FIXME ストアにアプリを登録したらurlが入れられる
   final appStoreURL =
-      Uri.parse('https://apps.apple.com/jp/app/id[6447428420]?mt=8');
+      Uri.parse('https://apps.apple.com/jp/app/%E3%82%BF%E3%82%B9%E3%82%AF%E3%83%88%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC/id6447428420');
 
   @override
   Widget build(BuildContext context) {

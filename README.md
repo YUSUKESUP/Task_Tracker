@@ -5,7 +5,6 @@
 [Google Play](https://play.google.com/store/apps/details?id=com.domain.firebase_crud)
 
 
-
 ## スクリーンショット(iPhone14Pro)
 
 ![img_1.png](img_1.png)
@@ -22,10 +21,8 @@
 | package_info_plus | 端末情報取得 |
 | version | versionの取得 |
 | firebase_messaging | 通知 |
-| Firestore | データの保存 |
-| Firestore | データの保存 |
 | FirebaseAuth | 認証 |
-| url_lancher | Webページの表示で使用 |
+| url_lancher | 強制アップデート先の表示 |
 
 # アプリの機能
 匿名ログイン

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../components/month_summary.calender.dart';
+import '../components/month_summary_calender.dart';
 import '../data/heatmap_database.dart';
 import '../state/app_state.dart';
 import '../state/firebase_provider.dart';

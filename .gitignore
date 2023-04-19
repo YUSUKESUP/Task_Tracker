@@ -44,8 +44,9 @@ app.*.map.json
 /android/app/release
 
 ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
 .dart_tool 2
-build 3/app/generated/res/google-services/debug/values/values.xml
+build 3
 .flutter-plugins 2
 .flutter-plugins 3
 .flutter-plugins 4
