@@ -160,3 +160,19 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+/// 選択肢1 グローバル変数にしてしまう。
+/// ファイルは別に作ったほうが良さそう app_colors.dart とか
+/// const primaryColor = Color(0xffFDF3E6);
+/// 
+/// 選択肢2 変数をまとめるためのクラスを作る。
+/// クラスにすると、候補を見つけやすいかもしれない。
+/// ```dart
+/// class AppColors {
+///   static const primaryColor = ...
+///   static const secondaryColor = ...
+/// }
+/// 
+/// AppColors. と打てば、どんな色が定義されているのか一覧を見ることができて便利かも
+/// ```
