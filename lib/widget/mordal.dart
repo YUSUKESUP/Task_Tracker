@@ -18,6 +18,7 @@ class MordalPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SizedBox(
+        height: MediaQuery.of(context).size.height *0.3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

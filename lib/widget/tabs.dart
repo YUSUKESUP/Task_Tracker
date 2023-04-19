@@ -97,16 +97,21 @@ class TabsPage extends ConsumerWidget {
               context: context,
               barrierColor: Colors.black.withOpacity(0.2),
               builder: (BuildContext context) {
-                return MordalPage(
-                  controller: controllerProvider,
-                  onPress: () {
-                    ref
-                        .read(appStateProvider.notifier)
-                        .textAdd(controllerProvider.text);
-                    controllerProvider.clear();
-                    Navigator.pop(context);
-                  },
-                  buttonName: 'タスクを追加',
+                return SingleChildScrollView(
+                  child: Padding(
+                      padding:  EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: MordalPage(
+                      controller: controllerProvider,
+                      onPress: () {
+                        ref
+                            .read(appStateProvider.notifier)
+                            .textAdd(controllerProvider.text);
+                        controllerProvider.clear();
+                        Navigator.pop(context);
+                      },
+                      buttonName: 'タスクを追加',
+                  ),
+                    ),
                 );
               },
             );
