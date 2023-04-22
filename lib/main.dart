@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_crud/widget/alert_dialog.dart';
+import 'package:firebase_crud/const/color.dart';
+import 'package:firebase_crud/widget/forced_update_dialog.dart';
 import 'package:firebase_crud/widget/tabs.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -48,15 +50,17 @@ void main() async {
 
     //トークンを取得
     final token = await messaging.getToken();
-    print('🐯 FCM TOKEN: $token');
+
 
     //取得したトークンをセット
     final user = FirebaseAuth.instance.currentUser;
     final uid = user?.uid;
-    final setToken = FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .set({'fcmToken': token});
+    if (uid != null) {
+      final setToken = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .set({'fcmToken': token}, SetOptions(merge: true));
+    }
 
     //Flutterでキャッチされた例外/エラー
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
@@ -85,21 +89,8 @@ class _MyAppState extends State<MyApp> {
     versionCheck();
   }
 
-  //強制アップデート
+  ///強制アップデート
   Future<void> versionCheck() async {
-    /// ダイアログを表示
-    void showUpdateDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return AlertDialogPage(
-              title: 'バージョン更新のお知らせ',
-              message: '新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい',
-              btnLabel: '今すぐ更新');
-        },
-      );
-    }
 
     //アプリのバージョンを取得
     final info = await PackageInfo.fromPlatform();
@@ -111,13 +102,33 @@ class _MyAppState extends State<MyApp> {
         .collection('config')
         .doc('nu7t69emUsaxYajqJEEE')
         .get();
-    final newVersion =
-        Version.parse(versionDates.data()!['ios_force_app_version'] as String);
 
-    //バージョンを比較し、現在のバージョンの方が低ければダイアログを出す
-    if (currentVersion < newVersion) {
+    final iosAppVersion =
+    Version.parse(versionDates.data()!['ios_force_app_version'] as String);
+
+    final androidAppVersion =
+    Version.parse(versionDates.data()!['android_force_app_version'] as String);
+
+    if (Platform.isIOS && currentVersion < iosAppVersion) {
+      showUpdateDialog(context);
+    } else if (Platform.isAndroid && currentVersion < androidAppVersion) {
       showUpdateDialog(context);
     }
+
+  }
+
+  /// ダイアログを表示
+  void showUpdateDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return ForcedUpdateDialogPage(
+            title: 'バージョン更新のお知らせ',
+            message: '新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい',
+            btnLabel: '今すぐ更新');
+      },
+    );
   }
 
   @override
@@ -125,10 +136,9 @@ class _MyAppState extends State<MyApp> {
     BuildContext context,) {
     return  MaterialApp(
       theme: ThemeData(
-        primaryColor: Color(0xffFDF3E6),
-        scaffoldBackgroundColor:  Color(0xffFDF3E6),
+        primaryColor:AppColors.primaryColor,
+        scaffoldBackgroundColor:AppColors.backgroundColor,
       ),
-
       debugShowCheckedModeBanner: false,
       home: TabsPage(),
     );

@@ -7,9 +7,9 @@
 
 ## スクリーンショット(iPhone14Pro)
 
-![](assets/export8A24088B-CB7B-4FDA-B19B-8016AB1B26D2.png)
-![](assets/export96BAE683-EFE0-4FA2-BEB9-A44B1291BC38.png)
-![](assets/export726F39F5-35AA-44A9-8073-B95B73FF091D.png)
+|カレンダーページ|ヒートマップ|タスク追加|
+|---|---|
+![](assets/export8A24088B-CB7B-4FDA-B19B-8016AB1B26D2.png)![](assets/export96BAE683-EFE0-4FA2-BEB9-A44B1291BC38.png)![](assets/export726F39F5-35AA-44A9-8073-B95B73FF091D.png)
 
 | 技術 | 用途 |
 | --- | --- |

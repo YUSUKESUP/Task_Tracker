@@ -3,20 +3,30 @@ import 'package:firebase_crud/components/month_summary_heatmap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import '../components/month_summary_calender.dart';
 import '../data/heatmap_database.dart';
-import '../state/app_state.dart';
-import '../state/firebase_provider.dart';
-import '../widget/mordal.dart';
+import '../provider/app_methods.dart';
+import '../provider/firebase_provider.dart';
+import '../widget/modal.dart';
+
+enum MonthlySummaryMode {
+  heatMap,
+  calender,
+}
 
 class HomePage extends ConsumerWidget {
+
+  final MonthlySummaryMode monthlySummaryMode;
+
   const HomePage({
     Key? key,
+    required this.monthlySummaryMode,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final firebaseTasks = ref.watch(firebaseTasksProvider);
-    final controllerProvider = ref.watch(textProvider);
+    final controllerProvider = ref.watch(textEditingController);
 
     //firebaseTasksの値ををfirebaseTasksSnapshotListsへ
     final firebaseTasksSnapshot = firebaseTasks.valueOrNull;
@@ -25,9 +35,8 @@ class HomePage extends ConsumerWidget {
         firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 
     //fetchHeatMapDateSetを呼び出し引数を渡す
-    TaskDatabase taskDatabase = TaskDatabase();
-    Map<DateTime, int>? heatmapDates =
-        taskDatabase.fetchHeatMapDateSet(firebaseTasksSnapshotLists);
+
+    Map<DateTime, int>? heatmapDates = fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
     int count = 0; // keyのデフォルト値を設定
 
@@ -36,17 +45,26 @@ class HomePage extends ConsumerWidget {
           .elementAt(0); // heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
     }
 
+
+    final appMethod = memoRepositoryProvider;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            //ヒートマップ
-            MonthlySummaryHeatMap(
-              heatmapDatasets: heatmapDates,
-              value: count,
-            ),
+            ///ヒートマップ
+            if (monthlySummaryMode == MonthlySummaryMode.heatMap)
+              MonthlySummaryHeatMap(
+                heatmapDatasets: heatmapDates,
+                value: count,
+              )
+            else
+              MonthlySummaryCalemder(
+                heatmapDatasets: heatmapDates,
+                value: count,
+              ),
             firebaseTasks.when(
               data: (QuerySnapshot query) {
                 return Expanded(
@@ -70,8 +88,8 @@ class HomePage extends ConsumerWidget {
                                       controller: controllerProvider,
                                       onPress: () {
                                         ref
-                                            .read(appStateProvider.notifier)
-                                            .textUpdate(document,
+                                            .read(appMethod)
+                                            .updateMemo(document,
                                                 controllerProvider.text);
                                         controllerProvider.clear();
                                         Navigator.pop(ctx);
@@ -88,7 +106,7 @@ class HomePage extends ConsumerWidget {
                             SlidableAction(
                               onPressed: (context) {
                                 ref
-                                    .read(appStateProvider.notifier)
+                                    .read(appMethod)
                                     .deleteMemo(document);
                               },
                               backgroundColor: Colors.red.shade400,
@@ -112,7 +130,7 @@ class HomePage extends ConsumerWidget {
                                   value: document['isDone'],
                                   onChanged: (bool? value) {
                                     ref
-                                        .read(appStateProvider.notifier)
+                                        .read(appMethod)
                                         .isDoneTasks(document,value ?? false);
                                   },
                                 ),

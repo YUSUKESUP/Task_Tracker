@@ -1,12 +1,11 @@
-import 'package:firebase_crud/pages/calender_page.dart';
 import 'package:firebase_crud/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../pages/setting.dart';
-import '../state/app_state.dart';
-import '../state/firebase_provider.dart';
-import 'mordal.dart';
+import '../provider/app_methods.dart';
+import '../provider/firebase_provider.dart';
+import 'modal.dart';
 
 class TabsPage extends ConsumerWidget {
   const TabsPage({Key? key}) : super(key: key);
@@ -18,7 +17,8 @@ class TabsPage extends ConsumerWidget {
     const selectedColor = Colors.black;
     const unselectedColor = Color(0xff5f6368);
 
-    final controllerProvider = ref.watch(textProvider);
+    final textEditingControllerProvider = ref.watch(textEditingController);
+    final appMethod = memoRepositoryProvider;
 
     return DefaultTabController(
       length: 2,
@@ -76,11 +76,15 @@ class TabsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Expanded(
+               Expanded(
                 child: TabBarView(
                   children: [
-                    HomePage(),
-                    CalenderPage(),
+                    HomePage(
+                      monthlySummaryMode: MonthlySummaryMode.heatMap,
+                    ),
+                    HomePage(
+                      monthlySummaryMode: MonthlySummaryMode.calender,
+                    ),
                   ],
                 ),
               ),
@@ -101,12 +105,12 @@ class TabsPage extends ConsumerWidget {
                   child: Padding(
                       padding:  EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: MordalPage(
-                      controller: controllerProvider,
-                      onPress: () {
+                      controller: textEditingControllerProvider,
+                      onPress: () async {
                         ref
-                            .read(appStateProvider.notifier)
-                            .textAdd(controllerProvider.text);
-                        controllerProvider.clear();
+                            .read(appMethod)
+                            .addMemo(textEditingControllerProvider.text);
+                        textEditingControllerProvider.clear();
                         Navigator.pop(context);
                       },
                       buttonName: 'タスクを追加',

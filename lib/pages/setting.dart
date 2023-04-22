@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../state/app_state.dart';
-import '../state/firebase_provider.dart';
-import '../widget/shimple_dialog.dart';
+import '../provider/app_methods.dart';
+import '../provider/firebase_provider.dart';
+import '../widget/withdrawal_dialog.dart';
 
 class SettingPage extends ConsumerWidget {
   SettingPage({Key? key}) : super(key: key);
@@ -14,12 +13,14 @@ class SettingPage extends ConsumerWidget {
 
     final firebaseNotifications = ref.watch(firebaseNotificationsProvider);
 
-    //退会ダイアログ
+    final appMethod = memoRepositoryProvider;
+
+    ///退会ダイアログ
     Future<void> withdrawalDialog() async {
       await showDialog(
           context: context,
           builder: (_) {
-            return const SimpleDialogPage();
+            return  WithdrawalDialogPage();
           });
     }
 
@@ -56,7 +57,7 @@ class SettingPage extends ConsumerWidget {
                 data()?['shouldNotification'] ?? false,
                 onChanged: (value) async {
                   ref
-                      .read(appStateProvider.notifier)
+                      .read(appMethod)
                       .upDateSwitch(value);
                 },
               ),

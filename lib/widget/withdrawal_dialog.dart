@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../pages/withdrawal.dart';
-import '../state/app_state.dart';
+import '../provider/app_methods.dart';
 
 
-class SimpleDialogPage extends ConsumerWidget {
-  const SimpleDialogPage({Key? key}) : super(key: key);
+class WithdrawalDialogPage extends ConsumerWidget {
+   WithdrawalDialogPage({Key? key}) : super(key: key);
+
+  final appMethod = memoRepositoryProvider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +27,7 @@ class SimpleDialogPage extends ConsumerWidget {
         CupertinoDialogAction(
           child: const Text('退会する'),
           onPressed: () async {
-            ref.read(appStateProvider.notifier).deleteUser();
+            ref.read(appMethod).deleteUser();
             Navigator.push(
                 context,
                 MaterialPageRoute(
