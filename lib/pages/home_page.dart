@@ -25,17 +25,17 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final firebaseTasks = ref.watch(firebaseTasksProvider);
+
+    final firebaseMemos = ref.watch(firebaseMemosProvider);
     final controllerProvider = ref.watch(textEditingController);
 
-    //firebaseTasksの値ををfirebaseTasksSnapshotListsへ
-    final firebaseTasksSnapshot = firebaseTasks.valueOrNull;
+    //firebaseMemosの値をfirebaseTasksSnapshotListsへ
+    final firebaseTasksSnapshot = firebaseMemos.valueOrNull;
     final List<Map<String, dynamic>> firebaseTasksSnapshotLists = [];
     firebaseTasksSnapshotLists.addAll(
         firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 
     //fetchHeatMapDateSetを呼び出し引数を渡す
-
     Map<DateTime, int>? heatmapDates = fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
     int count = 0; // keyのデフォルト値を設定
@@ -65,7 +65,7 @@ class HomePage extends ConsumerWidget {
                 heatmapDatasets: heatmapDates,
                 value: count,
               ),
-            firebaseTasks.when(
+            firebaseMemos.when(
               data: (QuerySnapshot query) {
                 return Expanded(
                   child: ListView(

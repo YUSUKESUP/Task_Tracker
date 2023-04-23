@@ -31,7 +31,6 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
      await document.reference.update({'text': text});
    }
 
-
    ///タスク削除
   Future<void> deleteMemo(QueryDocumentSnapshot document) async {
     await document.reference.delete();
@@ -70,92 +69,3 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
         .update({'shouldNotification': value});
   }
  }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'firebase_provider.dart';
-//
-// final appStateProvider = StateNotifierProvider<AppState, dynamic>((ref) {
-//   return AppState(ref);
-// });
-//
-// class AppState extends StateNotifier<dynamic> {
-//   final Ref _ref;
-//
-//   AppState(this._ref) : super([]);
-//
-//
-//   ///タスク追加
-//   Future<void> addMemo(String text) async {
-//     final ref = await _ref
-//         .read(firebaseFirestoreProvider)
-//         .collection('users')
-//         .doc(Uid)
-//         .collection('memos')
-//         .add({
-//       'text': text,
-//       'createdAt': FieldValue.serverTimestamp(),
-//       'isDone': false
-//     });
-//   }
-//
-//   ///タスク削除
-//   Future<void> updateMemo(QueryDocumentSnapshot document, String text) async {
-//     await _ref
-//         .read(firebaseFirestoreProvider)
-//         .collection('users')
-//         .doc(Uid)
-//         .collection('memos')
-//         .doc(document.id)
-//         .update({'text': text});
-//   }
-//
-//   ///タスク編集
-//   Future<void> deleteMemo(QueryDocumentSnapshot document) async {
-//     await _ref
-//         .read(firebaseFirestoreProvider)
-//         .collection('users')
-//         .doc(Uid)
-//         .collection('memos')
-//         .doc(document.id)
-//         .delete();
-//   }
-//
-//   ///ユーザー削除
-//   void deleteUser() async {
-//     final user = FirebaseAuth.instance.currentUser;
-//     final uid = user?.uid;
-//     final msg =
-//         await FirebaseFirestore.instance.collection('users').doc(uid).delete();
-//     await FirebaseFirestore.instance
-//         .collection('users')
-//         .doc(uid)
-//         .collection('memos')
-//         .doc(uid)
-//         .delete();
-//     // ユーザーを削除
-//     await user?.delete();
-//     await FirebaseAuth.instance.signOut();
-//   }
-//
-//   ///タスクが完了しているか
-//   Future<void> isDoneTasks(QueryDocumentSnapshot document, bool value) async {
-//     await _ref
-//         .read(firebaseFirestoreProvider)
-//         .collection('users')
-//         .doc(Uid)
-//         .collection('memos')
-//         .doc(document.id)
-//         .update({'isDone': value});
-//   }
-//
-//   ///スイッチの切り替え
-//   Future<void> upDateSwitch(bool value) async {
-//     await _ref
-//         .read(firebaseFirestoreProvider)
-//         .collection('users')
-//         .doc(Uid)
-//         .update({'shouldNotification': value});
-//   }
-// }

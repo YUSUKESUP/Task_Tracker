@@ -20,7 +20,7 @@ final uidProvider = Provider((ref) {
   return user?.uid;
 });
 
-final firebaseTasksProvider = StreamProvider.autoDispose((ref) {
+final firebaseMemosProvider = StreamProvider.autoDispose((ref) {
   final uid = ref.watch(uidProvider);
   return FirebaseFirestore.instance
       .collection('users')
