@@ -54,7 +54,6 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
         .collection('memos')
         .doc(uid)
         .delete();
-    // ユーザーを削除
     await user?.delete();
     await FirebaseAuth.instance.signOut();
   }

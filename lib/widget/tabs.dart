@@ -51,7 +51,6 @@ class TabsPage extends ConsumerWidget {
                 ),
               ),
             ]),
-        backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Column(
             children: [
