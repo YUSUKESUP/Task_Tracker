@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../model/memo.dart';
+
 final firebaseFirestoreProvider =
     Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
 
@@ -21,15 +23,15 @@ final uidProvider = Provider((ref) {
   return user?.uid;
 });
 
-final firebaseMemosProvider = StreamProvider.autoDispose((ref) {
-  final uid = ref.watch(uidProvider);
-  return FirebaseFirestore.instance
-      .collection('users')
-      .doc(uid)
-      .collection('memos')
-      .orderBy('createdAt')
-      .snapshots();
-});
+// final firebaseMemosProvider = StreamProvider.autoDispose((ref) {
+//   final uid = ref.watch(uidProvider);
+//   return FirebaseFirestore.instance
+//       .collection('users')
+//       .doc(uid)
+//       .collection('memos')
+//       .orderBy('createdAt')
+//       .snapshots();
+// });
 
 
 final firebaseNotificationsProvider = StreamProvider.autoDispose((ref) {
@@ -38,15 +40,15 @@ final firebaseNotificationsProvider = StreamProvider.autoDispose((ref) {
 });
 
 
-// final firebaseMemosProvider = StreamProvider<QuerySnapshot<Memo>>((ref) {
-//   final uid = ref.watch(uidProvider);
-//   return FirebaseFirestore.instance
-//       .collection('users')
-//       .doc(uid)
-//       .collection('memos')
-//       .orderBy('createdAt')
-//       .withConverter<Memo>(
-//       fromFirestore: (snapshot, _) => Memo.fromFirestore(snapshot),
-//       toFirestore: (memo, _) => memo.toDocument())
-//       .snapshots();
-// });
+final firebaseMemosProvider = StreamProvider<QuerySnapshot<Memo>>((ref) {
+  final uid = ref.watch(uidProvider);
+  return FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('memos')
+      .orderBy('createdAt')
+      .withConverter<Memo>(
+      fromFirestore: (snapshot, _) => Memo.fromFirestore(snapshot),
+      toFirestore: (memo, _) => memo.toDocument())
+      .snapshots();
+});

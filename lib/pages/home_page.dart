@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/components/month_summary_heatmap.dart';
+import 'package:firebase_crud/model/memo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -31,7 +32,7 @@ class HomePage extends ConsumerWidget {
 
     //firebaseMemosの値をfirebaseTasksSnapshotListsへ
     final firebaseTasksSnapshot = firebaseMemos.valueOrNull;
-    final List<Map<String, dynamic>> firebaseTasksSnapshotLists = [];
+    final List<Memo> firebaseTasksSnapshotLists = [];
     firebaseTasksSnapshotLists.addAll(
         firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 

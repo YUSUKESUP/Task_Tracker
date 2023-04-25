@@ -22,7 +22,7 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
         .collection('memos')
         .add({
       'text': text,
-      'createdAt': Timestamp.fromDate(DateTime.now()),
+      'createdAt': FieldValue.serverTimestamp(),
       'isDone': false
     });
   }
