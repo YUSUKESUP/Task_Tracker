@@ -23,17 +23,6 @@ final uidProvider = Provider((ref) {
   return user?.uid;
 });
 
-// final firebaseMemosProvider = StreamProvider.autoDispose((ref) {
-//   final uid = ref.watch(uidProvider);
-//   return FirebaseFirestore.instance
-//       .collection('users')
-//       .doc(uid)
-//       .collection('memos')
-//       .orderBy('createdAt')
-//       .snapshots();
-// });
-
-
 final firebaseNotificationsProvider = StreamProvider.autoDispose((ref) {
   final uid = ref.watch(uidProvider);
   return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class WithdrawalPage extends StatelessWidget {
   const WithdrawalPage({Key? key}) : super(key: key);
 
-  //退会後ページ
+  ///退会後ページ
 
   @override
   Widget build(BuildContext context) {

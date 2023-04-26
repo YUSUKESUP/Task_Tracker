@@ -13,7 +13,7 @@ class MonthlySummaryCalemder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //ヒーマップカレンダー
+    ///ヒーマップカレンダー
     return Container(
       padding: const EdgeInsets.only(bottom: 15),
       child: HeatMapCalendar(

@@ -13,7 +13,7 @@ class TabsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    //タブ
+    ///タブ
     const selectedColor = Colors.black;
     const unselectedColor = Color(0xff5f6368);
 

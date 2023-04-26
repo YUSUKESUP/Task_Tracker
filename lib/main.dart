@@ -22,11 +22,11 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    //匿名ログイン(UIDとドキュメントIDを一致させる)
+    ///匿名ログイン(UIDとドキュメントIDを一致させる)
     final firebaseUser = await FirebaseAuth.instance.userChanges().first;
 
     if (firebaseUser == null) {
-      // 未サインインなら匿名ユーザーでサインイン
+      /// 未サインインなら匿名ユーザーでサインイン
       final credential = await FirebaseAuth.instance.signInAnonymously();
 
       final uid = credential.user!.uid;
@@ -36,7 +36,7 @@ void main() async {
           .set({'uid': uid, 'shouldNotification': false});
     }
 
-    //プッシュ通知
+    ///プッシュ通知
     final messaging = FirebaseMessaging.instance;
     await messaging.requestPermission(
       alert: true,
@@ -48,11 +48,11 @@ void main() async {
       sound: true,
     );
 
-    //トークンを取得
+    ///トークンを取得
     final token = await messaging.getToken();
 
 
-    //取得したトークンをセット
+    ///取得したトークンをセット
     final user = FirebaseAuth.instance.currentUser;
     final uid = user?.uid;
     if (uid != null) {
@@ -62,13 +62,13 @@ void main() async {
           .set({'fcmToken': token}, SetOptions(merge: true));
     }
 
-    //Flutterでキャッチされた例外/エラー
+    ///Flutterでキャッチされた例外/エラー
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     runApp(
       const ProviderScope(child: MyApp()),
     );
   }, (error, stackTrace) {
-    //Flutterでキャッチされなかった例外/エラー
+    ///Flutterでキャッチされなかった例外/エラー
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }
@@ -92,12 +92,12 @@ class _MyAppState extends State<MyApp> {
   ///強制アップデート
   Future<void> versionCheck() async {
 
-    //アプリのバージョンを取得
+    ///アプリのバージョンを取得
     final info = await PackageInfo.fromPlatform();
     final currentVersion = Version.parse(info.version);
     print(currentVersion);
 
-    //Firestoreからアップデートしたいバージョンを取得
+    ///Firestoreからアップデートしたいバージョンを取得
     final versionDates = await FirebaseFirestore.instance
         .collection('config')
         .doc('nu7t69emUsaxYajqJEEE')

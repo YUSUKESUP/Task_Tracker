@@ -30,20 +30,20 @@ class HomePage extends ConsumerWidget {
     final firebaseMemos = ref.watch(firebaseMemosProvider);
     final controllerProvider = ref.watch(textEditingController);
 
-    //firebaseMemosの値をfirebaseTasksSnapshotListsへ
+    ///firebaseMemosの値をfirebaseTasksSnapshotListsへ
     final firebaseTasksSnapshot = firebaseMemos.valueOrNull;
     final List<Memo> firebaseTasksSnapshotLists = [];
     firebaseTasksSnapshotLists.addAll(
         firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 
-    //fetchHeatMapDateSetを呼び出し引数を渡す
+    ///fetchHeatMapDateSetを呼び出し引数を渡す
     Map<DateTime, int>? heatmapDates = fetchHeatMapDateSet(firebaseTasksSnapshotLists);
 
-    int count = 0; // keyのデフォルト値を設定
+    int count = 0; /// keyのデフォルト値を設定
 
     if (heatmapDates != null && heatmapDates.isNotEmpty) {
       count = heatmapDates.values
-          .elementAt(0); // heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
+          .elementAt(0); /// heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
     }
 
 
