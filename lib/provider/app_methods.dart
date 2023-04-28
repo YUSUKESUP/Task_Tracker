@@ -12,7 +12,7 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
 
    MemoRepository(this.firestore, this._ref);
 
- ///タスク追加
+  ///タスク追加
   Future<void> addMemo(String text) async {
     final uid = _ref.watch(uidProvider);
       await _ref

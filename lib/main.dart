@@ -28,7 +28,6 @@ void main() async {
     if (firebaseUser == null) {
       /// 未サインインなら匿名ユーザーでサインイン
       final credential = await FirebaseAuth.instance.signInAnonymously();
-
       final uid = credential.user!.uid;
       final users = FirebaseFirestore.instance
           .collection('users')
@@ -50,7 +49,6 @@ void main() async {
 
     ///トークンを取得
     final token = await messaging.getToken();
-
 
     ///取得したトークンをセット
     final user = FirebaseAuth.instance.currentUser;
@@ -89,7 +87,7 @@ class _MyAppState extends State<MyApp> {
     versionCheck();
   }
 
-  ///強制アップデート
+    ///強制アップデート
   Future<void> versionCheck() async {
 
     ///アプリのバージョンを取得
@@ -102,10 +100,10 @@ class _MyAppState extends State<MyApp> {
         .collection('config')
         .doc('nu7t69emUsaxYajqJEEE')
         .get();
-
+    ///ios
     final iosAppVersion =
     Version.parse(versionDates.data()!['ios_force_app_version'] as String);
-
+    ///android
     final androidAppVersion =
     Version.parse(versionDates.data()!['android_force_app_version'] as String);
 

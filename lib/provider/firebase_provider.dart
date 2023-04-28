@@ -23,12 +23,13 @@ final uidProvider = Provider((ref) {
   return user?.uid;
 });
 
+///usersコレクションの取得
 final firebaseNotificationsProvider = StreamProvider.autoDispose((ref) {
   final uid = ref.watch(uidProvider);
   return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
 });
 
-
+///memosサブコレクションの取得
 final firebaseMemosProvider = StreamProvider<QuerySnapshot<Memo>>((ref) {
   final uid = ref.watch(uidProvider);
   return FirebaseFirestore.instance
