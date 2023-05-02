@@ -42,6 +42,17 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
    }
 
 
+   ///スイッチの切り替え
+   Future<void> upDateSwitch(bool value) async {
+     final uid = _ref.watch(uidProvider);
+     await _ref
+         .read(firebaseFirestoreProvider)
+         .collection('users')
+         .doc(uid)
+         .update({'shouldNotification': value});
+   }
+
+
    ///ユーザー削除
   void deleteUser() async {
     final uid = _ref.watch(uidProvider);
@@ -58,13 +69,4 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
     await FirebaseAuth.instance.signOut();
   }
 
-  ///スイッチの切り替え
-  Future<void> upDateSwitch(bool value) async {
-    final uid = _ref.watch(uidProvider);
-    await _ref
-        .read(firebaseFirestoreProvider)
-        .collection('users')
-        .doc(uid)
-        .update({'shouldNotification': value});
-  }
  }
