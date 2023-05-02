@@ -1,75 +1,63 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_crud/model/memo.dart';
-// import 'package:firebase_crud/repository/sample_repository.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/mockito.dart';
-//
-// class MockFirebaseFirestore extends Mock implements FirebaseFirestore {}
-//
-// void main() {
-//   group('SampleRepository', () {
-//     late SampleRepository sampleRepository;
-//     late FirebaseFirestore mockFirestore;
-//
-//     setUp(() {
-//       mockFirestore = MockFirebaseFirestore();
-//       sampleRepository = SampleRepository(fireStore: mockFirestore);
-//     });
-//
-//     test('getSampleDataList returns list of SampleData', () async {
-//       // given
-//       final userId = 'testUserId';
-//       final memoList = [        Memo(text: 'memo1', createdAt: DateTime.now(), isDone: false),        Memo(text: 'memo2', createdAt: DateTime.now(), isDone: true),      ];
-//       final mockQuerySnapshot = MockQuerySnapshot(memoList.map((memo) => MockQueryDocumentSnapshot(memo.toDocument())).toList());
-//       when(mockFirestore.collection('users').doc(userId).collection('favoriteData').get()).thenAnswer((_) async => mockQuerySnapshot);
-//
-//       // when
-//       final result = await sampleRepository.getSampleDataList(userId: userId);
-//
-//       // then
-//       expect(result, memoList);
-//     });
-//
-//     test('addData adds Memo to Firestore', () async {
-//       // given
-//       final userId = 'testUserId';
-//       final memo = Memo(text: 'memo1', createdAt: DateTime.now(), isDone: false);
-//       final mockDocumentReference = MockDocumentReference();
-//       when(mockFirestore.collection('users').doc(userId).collection('favoriteData').doc(memo.id)).thenReturn(mockDocumentReference);
-//
-//       // when
-//       await sampleRepository.addData(userId: userId, sampleData: memo);
-//
-//       // then
-//       verify(mockDocumentReference.set(memo.toJson()));
-//     });
-//
-//     test('updateData updates Memo in Firestore', () async {
-//       // given
-//       final userId = 'testUserId';
-//       final memo = Memo(text: 'memo1', createdAt: DateTime.now(), isDone: false);
-//       final mockDocumentReference = MockDocumentReference();
-//       when(mockFirestore.collection('users').doc(userId).collection('favoriteData').doc(memo.id)).thenReturn(mockDocumentReference);
-//
-//       // when
-//       await sampleRepository.updateData(userId: userId, sampleData: memo);
-//
-//       // then
-//       verify(mockDocumentReference.update(memo.toJson()));
-//     });
-//
-//     test('deleteData deletes Memo from Firestore', () async {
-//       // given
-//       final userId = 'testUserId';
-//       final memo = Memo(text: 'memo1', createdAt: DateTime.now(), isDone: false);
-//       final mockDocumentReference = MockDocumentReference();
-//       when(mockFirestore.collection('users').doc(userId).collection('favoriteData').doc(memo.id)).thenReturn(mockDocumentReference);
-//
-//       // when
-//       await sampleRepository.deleteData(userId: userId, sampleData: memo);
-//
-//       // then
-//       verify(mockDocumentReference.delete());
-//     });
-//   });
-// }
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+class MockPackageInfo extends Mock implements PackageInfo {}
+
+void main() {
+  group('versionCheck', () {
+    testWidgets('should show update dialog if version is older than Firestore config',
+            (WidgetTester tester) async {
+          final firestore = FakeFirebaseFirestore();
+
+          // Firestoreに登録するテスト用のバージョン情報
+          final iosVersion = '2.0.0';
+          final androidVersion = '2.0.0';
+          await firestore.collection('config').doc('nu7t69emUsaxYajqJEEE').set({
+            'ios_force_app_version': iosVersion,
+            'android_force_app_version': androidVersion,
+          });
+
+          // PackageInfo.fromPlatform() のモック
+          final fakePackageInfo = MockPackageInfo();
+          when(fakePackageInfo.version).thenReturn('1.0.0');
+
+          // versionCheck() 関数を実行し、アップデートダイアログが表示されることを確認
+          await tester.runAsync(() async {
+            await versionCheck(firestore, fakePackageInfo, context: null);
+            await tester.pumpAndSettle();
+            expect(find.text('New version available!'), findsOneWidget);
+          });
+
+          // アップデートをスキップした場合、ダイアログが消えることを確認
+          await tester.tap(find.text('Skip'));
+          await tester.pumpAndSettle();
+          expect(find.text('New version available!'), findsNothing);
+        });
+
+    testWidgets('should not show update dialog if version is equal or newer than Firestore config',
+            (WidgetTester tester) async {
+          final firestore = FakeFirebaseFirestore();
+
+          // Firestoreに登録するテスト用のバージョン情報
+          final iosVersion = '2.0.0';
+          final androidVersion = '2.0.0';
+          await firestore.collection('config').doc('nu7t69emUsaxYajqJEEE').set({
+            'ios_force_app_version': iosVersion,
+            'android_force_app_version': androidVersion,
+          });
+
+          // PackageInfo.fromPlatform() のモック
+          final fakePackageInfo = MockPackageInfo();
+          when(fakePackageInfo.version).thenReturn(iosVersion); // Firestoreに登録したバージョンと同じか新しいバージョンを指定
+
+          // versionCheck() 関数を実行し、アップデートダイアログが表示されないことを確認
+          await tester.runAsync(() async {
+            await versionCheck(firestore, fakePackageInfo, context: null);
+            await tester.pumpAndSettle();
+            expect(find.text('New version available!'), findsNothing);
+          });
+        });
+  });
+}
