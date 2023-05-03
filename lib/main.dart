@@ -112,7 +112,6 @@ class _MyAppState extends State<MyApp> {
     } else if (Platform.isAndroid && currentVersion < androidAppVersion) {
       showUpdateDialog(context);
     }
-
   }
 
   /// ダイアログを表示
