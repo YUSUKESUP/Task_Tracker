@@ -8,8 +8,11 @@
 ## スクリーンショット(iPhone14Pro)
 
 |カレンダーページ|ヒートマップ|タスク追加|
-|---|---|
-![](assets/export8A24088B-CB7B-4FDA-B19B-8016AB1B26D2.png)![](assets/export96BAE683-EFE0-4FA2-BEB9-A44B1291BC38.png)![](assets/export726F39F5-35AA-44A9-8073-B95B73FF091D.png)
+
+<image src='./assets/export8A24088B-CB7B-4FDA-B19B-8016AB1B26D2.png' width='200' hight='200'></image>
+<image src='./assets/export96BAE683-EFE0-4FA2-BEB9-A44B1291BC38.png' width='200' hight='200'></image>
+<image src='./assets/export726F39F5-35AA-44A9-8073-B95B73FF091D.png' width='200' hight='200'></image>
+
 
 | 技術 | 用途 |
 | --- | --- |
@@ -23,6 +26,11 @@
 | firebase_messaging | 通知 |
 | FirebaseAuth | 認証 |
 | url_lancher | 強制アップデート先の表示 |
+| firebase_cloud_functions |  通知の定期実行 |
+| freezed | データクラスの作成 |
+| fake_cloud_firestore | FireStoreのmock作成 |
+
+
 
 # アプリの機能
 ・匿名ログイン<br>
@@ -33,7 +41,3 @@
 ・タスクの削除<br>
 ・ヒートマップ<br>
 ・カレンダー
-
-
-
-

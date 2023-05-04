@@ -21,11 +21,11 @@ void main() {
       memoRepository = container.read(memoRepositoryProvider);
     });
 
-    test('updateSwitch should update switch value in Firestore', () async {
-      // update switch value
+    test('updateSwitchはFirestore内のswitchの値を更新すること', () async {
+      // switchの値を更新
       await memoRepository.upDateSwitch(true);
 
-      // verify that the switch value was updated
+      // switchの値が更新されたことを確認
       final snapshot = await firestore
           .collection('users')
           .doc('test_user_id')

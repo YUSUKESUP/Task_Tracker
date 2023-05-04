@@ -22,14 +22,14 @@ void main() {
     });
 
     test('updateMemo should update memo in Firestore', () async {
-      // add a memo
+      // メモを追加
       final memoRef = await firestore
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
           .add({'text': 'Test memo', 'isDone': false});
 
-      // update the memo
+      // メモを更新
       final snapshots = await firestore
           .collection('users')
           .doc('test_user_id')
@@ -38,7 +38,7 @@ void main() {
       final document = snapshots.docs.first;
       await memoRepository.updateMemo(document, 'Updated memo');
 
-      // verify that the memo was updated
+      // メモが更新されたことを確認
       final snapshot = await memoRef.get();
       expect(snapshot.data()?['text'], equals('Updated memo'));
     });

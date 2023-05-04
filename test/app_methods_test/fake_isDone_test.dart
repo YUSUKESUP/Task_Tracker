@@ -22,14 +22,14 @@ void main() {
     });
 
     test('isDoneTasks should update memo in Firestore', () async {
-      // add a memo
+      // メモを追加する
       final memoRef = await firestore
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
           .add({'text': 'Test memo', 'isDone': false});
 
-      // update the memo
+      // メモを更新する
       final snapshots = await firestore
           .collection('users')
           .doc('test_user_id')
@@ -38,7 +38,7 @@ void main() {
       final document = snapshots.docs.first;
       await memoRepository.isDoneTasks(document, true);
 
-      // verify that the memo was updated
+      // メモが更新されたことを確認する
       final snapshot = await memoRef.get();
       expect(snapshot.data()?['isDone'], equals(true));
     });

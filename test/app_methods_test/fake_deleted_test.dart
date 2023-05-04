@@ -22,14 +22,14 @@ void main() {
     });
 
     test('deleteMemo should delete memo from Firestore', () async {
-      // add a memo
+      // 新規メモを追加
       final memoRef = await firestore
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
           .add({'text': 'Test memo', 'isDone': false});
 
-      // delete the memo
+      // メモを削除
       final snapshots = await firestore
           .collection('users')
           .doc('test_user_id')
@@ -38,7 +38,7 @@ void main() {
       final document = snapshots.docs.first;
       await memoRepository.deleteMemo(document);
 
-      // verify that the memo was deleted
+      // メモが削除されたことを確認
       final snapshot = await memoRef.get();
       expect(snapshot.exists, isFalse);
     });
