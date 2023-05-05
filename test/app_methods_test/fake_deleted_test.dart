@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_crud/provider/app_methods.dart';
 import 'package:firebase_crud/provider/firebase_provider.dart';

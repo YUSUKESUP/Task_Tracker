@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_crud/provider/app_methods.dart';
 import 'package:firebase_crud/provider/firebase_provider.dart';
@@ -10,8 +9,12 @@ void main() {
     late MemoRepository memoRepository;
     late FakeFirebaseFirestore firestore;
 
-    setUp(() {
+    setUp(() async {
       firestore = FakeFirebaseFirestore();
+      await firestore
+          .collection('users')
+          .doc('test_user_id')
+          .set({'shouldNotification': false});
       final container = ProviderContainer(
         overrides: [
           firebaseFirestoreProvider.overrideWithValue(firestore),
@@ -20,6 +23,7 @@ void main() {
       );
       memoRepository = container.read(memoRepositoryProvider);
     });
+
 
     test('updateSwitchはFirestore内のswitchの値を更新すること', () async {
       // switchの値を更新

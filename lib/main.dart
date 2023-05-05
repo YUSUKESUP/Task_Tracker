@@ -1,17 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_crud/const/color.dart';
-import 'package:firebase_crud/widget/forced_update_dialog.dart';
 import 'package:firebase_crud/widget/tabs.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:version/version.dart';
 import 'data/version_check.dart';
 import 'firebase_options.dart';
 
