@@ -8,7 +8,7 @@ import 'package:firebase_crud/widget/tabs.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'provider/version_check.dart';
+import 'data/version_check.dart';
 import 'firebase_options.dart';
 
 void main() async {
