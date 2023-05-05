@@ -8,7 +8,7 @@ import 'package:firebase_crud/widget/tabs.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'data/version_check.dart';
+import 'provider/version_check.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -68,20 +68,20 @@ void main() async {
   });
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({
     super.key,
   });
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
-    versionCheck(context);
+    ref.read(versionCheckDialogProvider);
   }
 
 

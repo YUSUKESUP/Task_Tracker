@@ -1,18 +1,25 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
 import '../widget/forced_update_dialog.dart';
 
 
 
+final packageInfoProvider = FutureProvider((_) =>  PackageInfo.fromPlatform());
+
+final versionCheckDialogProvider = Provider((ref) => VersionCheckDialog());
+
+class VersionCheckDialog {
+
   ///強制アップデート
 
-  Future<void> versionCheck(BuildContext context) async {
+  Future<void> versionCheck(BuildContext context, WidgetRef ref) async {
 
     ///アプリのバージョンを取得
-    final info = await PackageInfo.fromPlatform();
+    final info = await ref.read(packageInfoProvider.future);
     final currentVersion = Version.parse(info.version);
 
 
@@ -48,5 +55,10 @@ import '../widget/forced_update_dialog.dart';
       },
     );
   }
+
+
+
+
+}
 
 

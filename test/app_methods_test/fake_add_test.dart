@@ -6,25 +6,22 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('MemoRepository', () {
-    late MemoRepository memoRepository;
-    late FakeFirebaseFirestore firestore;
+    late final  ProviderContainer container;
 
     setUp(() {
-      firestore = FakeFirebaseFirestore();
-      final container = ProviderContainer(
+       container = ProviderContainer(
         overrides: [
-          firebaseFirestoreProvider.overrideWithValue(firestore),
+          firebaseFirestoreProvider.overrideWithValue(FakeFirebaseFirestore()),
           uidProvider.overrideWithValue('test_user_id'),
         ],
       );
-      memoRepository = container.read(memoRepositoryProvider);
     });
 
     test('addMemo should add memo to Firestore', () async {
-      await memoRepository.addMemo('Test memo');
+      await container.read(memoRepositoryProvider).addMemo('Test memo');
 
       // Firestoreからメモを取得
-      final snapshots = await firestore
+      final snapshots = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
