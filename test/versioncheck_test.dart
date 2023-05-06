@@ -1,75 +1,68 @@
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_crud/data/version_check.dart';
 import 'package:firebase_crud/provider/firebase_provider.dart';
+import 'package:firebase_crud/widget/forced_update_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-
 
 void main() {
-  late ProviderContainer container;
+  group('UpdateCheckService', () {
+    late ProviderContainer container;
+    late FakeFirebaseFirestore firestore;
 
-  setUp(() {
-    container = ProviderContainer(
-      overrides: [
-        firebaseFirestoreProvider.overrideWithValue(FakeFirebaseFirestore()),
-        packageInfoProvider.overrideWith((ref) => PackageInfo(appName: 'TestPackageTnfo', packageName: 'com.TestPackageTnfo', version: '1.0.0', buildNumber: '1',)),
-      ],
-    );
-  });
-
-  testWidgets('Firestoreと端末のバージョンが違うためダイアログが出るパターン',
-          (WidgetTester tester) async {
-        // Firestoreに登録するテスト用のバージョン情報
-        const iosVersion = '2.0.0';
-        const androidVersion = '2.0.0';
-        final firestore = container.read(firebaseFirestoreProvider);
-        await firestore.collection('config').doc('nu7t69emUsaxYajqJEEE').set({
-          'ios_force_app_version': iosVersion,
-          'android_force_app_version': androidVersion,
-        });
-
-        // PackageInfo.fromPlatform() のモック
-        final fakePackageInfo = container.read(packageInfoProvider);
-
-        when(fakePackageInfo).thenReturn('1.0.0' as AsyncValue<PackageInfo>);
-
-        // versionCheck() 関数を実行し、アップデートダイアログが表示されることを確認
-        await tester.runAsync(() async {
-          await versionCheck();
-          await tester.pumpAndSettle();
-          expect(find.text('New version available!'), findsOneWidget);
-        });
+    setUp(() async {
+      firestore = FakeFirebaseFirestore();
+      final packageInfo = PackageInfo(
+        appName: 'test',
+        packageName: 'com.example.test',
+        version: '1.0.0',
+        buildNumber: '1',
+      );
+      container = ProviderContainer(
+        overrides: [
+          packageInfoProvider,
+          firebaseFirestoreProvider.overrideWithValue(firestore),
+        ],
+      );
+      await firestore.collection('config').doc('nu7t69emUsaxYajqJEEE').set({
+        'ios_force_app_version': '2.0.0',
+        'android_force_app_version': '2.0.0',
       });
+    });
+
+
+
+    testWidgets(
+        'do not show update dialog when there is no forced update available',
+            (tester) async {
+          await tester.runAsync(() async {
+            // Set the current version to the latest version
+            await firestore
+                .collection('config')
+                .doc('nu7t69emUsaxYajqJEEE')
+                .set({
+              'ios_force_app_version': '1.0.0',
+              'android_force_app_version': '1.0.0',
+            });
+            final packageInfo = PackageInfo(
+              appName: 'test',
+              packageName: 'com.example.test',
+              version: '1.0.0',
+              buildNumber: '1',
+            );
+            final container = ProviderContainer(
+              overrides: [
+                packageInfoProvider,
+                firebaseFirestoreProvider.overrideWithValue(firestore),
+              ],
+            );
+
+            await tester.pumpAndSettle();
+            expect(find.byType(Dialog), findsNothing);
+
+          });
+        });
+  });
 }
-
-
-// testWidgets(
-// 'Firestoreと端末のバージョンが同じためダイアログが出ないパターン',
-// (WidgetTester tester) async {
-// // Firestoreに登録するテスト用のバージョン情報
-// const iosVersion = '1.0.0';
-// const androidVersion = '1.0.0';
-// final firestore = container.read(firebaseFirestoreProvider);
-// await firestore.collection('config').doc('nu7t69emUsaxYajqJEEE').set({
-// 'ios_force_app_version': iosVersion,
-// 'android_force_app_version': androidVersion,
-// });
-//
-// // PackageInfo.fromPlatform() のモック
-// final fakePackageInfo = MockPackageInfo();
-// when(fakePackageInfo.version).thenReturn('1.0.0');
-//
-//
-// // BuildContextのモック
-// final mockContext = MockBuildContext();
-//
-// // versionCheck() 関数を実行し、アップデートダイアログが表示されないことを確認
-// await tester.runAsync(() async {
-// await versionCheck(mockContext);
-// await tester.pumpAndSettle();
-// expect(find.text('New version available!'), findsNothing);
-// });
-// },
-// );

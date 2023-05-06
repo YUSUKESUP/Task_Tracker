@@ -14,6 +14,7 @@ final versionCheckDialogProvider = Provider((ref) => VersionCheckDialog());
 
 class VersionCheckDialog {
 
+
   ///強制アップデート
 
   Future<void> versionCheck(BuildContext context, WidgetRef ref) async {

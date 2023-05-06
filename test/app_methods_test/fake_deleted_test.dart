@@ -22,11 +22,12 @@ void main() {
 
     test('deleteMemo should delete memo from Firestore', () async {
       // 新規メモを追加
-      final memoRef = await firestore
+      final memoRef = firestore
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
-          .add({'text': 'Test memo', 'isDone': false});
+          .doc();
+      await memoRef.set({'text': 'Test memo', 'isDone': false});
 
       // メモを削除
       final snapshots = await firestore
