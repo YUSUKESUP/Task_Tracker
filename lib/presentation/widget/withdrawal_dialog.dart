@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../application/provider/app_methods.dart';
 import '../pages/withdrawal.dart';
-import '../provider/app_methods.dart';
 
 
 class WithdrawalDialogPage extends ConsumerWidget {

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
-import '../widget/forced_update_dialog.dart';
+
+import '../../presentation/widget/forced_update_dialog.dart';
+
 
 
 
@@ -37,9 +39,9 @@ class VersionCheckDialog {
     Version.parse(versionDates.data()!['android_force_app_version'] as String);
 
     if (Platform.isIOS && currentVersion < iosAppVersion) {
-      showUpdateDialog(context as BuildContext);
+      showUpdateDialog(context);
     } else if (Platform.isAndroid && currentVersion < androidAppVersion) {
-      showUpdateDialog(context as BuildContext);
+      showUpdateDialog(context);
     }
   }
 

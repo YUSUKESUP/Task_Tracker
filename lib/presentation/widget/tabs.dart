@@ -1,10 +1,10 @@
-import 'package:firebase_crud/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../application/provider/app_methods.dart';
+import '../../application/provider/firebase_provider.dart';
+import '../pages/home_page.dart';
 import '../pages/setting.dart';
-import '../provider/app_methods.dart';
-import '../provider/firebase_provider.dart';
 import 'modal.dart';
 
 class TabsPage extends ConsumerWidget {

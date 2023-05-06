@@ -38,7 +38,7 @@ Map<DateTime, int> fetchHeatMapDateSet(List<Memo> tasks) {
 //   final startDate = DateTime(DateTime.now().year, 4);
 //
 //   ///日数
-//   const int maxDaysInMonth = 365;
+//   theme int maxDaysInMonth = 365;
 //
 //   ///タスクが完了した日を１日づつ確認
 //   for (var i = 0; i < maxDaysInMonth; i++) {

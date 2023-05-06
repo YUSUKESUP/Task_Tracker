@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_crud/const/color.dart';
-import 'package:firebase_crud/widget/tabs.dart';
+import 'package:firebase_crud/presentation/theme/color.dart';
+import 'package:firebase_crud/presentation/widget/tabs.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'data/version_check.dart';
-import 'firebase_options.dart';
+import 'application/provider/version_check.dart';
+import 'infrastructure/firebase_options.dart';
 
 void main() async {
 

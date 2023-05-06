@@ -1,28 +1,28 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:firebase_crud/provider/app_methods.dart';
-import 'package:firebase_crud/provider/firebase_provider.dart';
+import 'package:firebase_crud/application/provider/app_methods.dart';
+import 'package:firebase_crud/application/provider/firebase_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('MemoRepository', () {
+  group('メモリポジトリー', () {
     late MemoRepository memoRepository;
-    late FakeFirebaseFirestore firestore;
+    late ProviderContainer container;
+
 
     setUp(() {
-      firestore = FakeFirebaseFirestore();
-      final container = ProviderContainer(
+       container = ProviderContainer(
         overrides: [
-          firebaseFirestoreProvider.overrideWithValue(firestore),
+          firebaseFirestoreProvider.overrideWithValue(FakeFirebaseFirestore()),
           uidProvider.overrideWithValue('test_user_id'),
         ],
       );
       memoRepository = container.read(memoRepositoryProvider);
     });
 
-    test('deleteMemo should delete memo from Firestore', () async {
+    test('deleteMemoメソッドのテスト', () async {
       // 新規メモを追加
-      final memoRef = firestore
+      final memoRef = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
@@ -30,7 +30,7 @@ void main() {
       await memoRef.set({'text': 'Test memo', 'isDone': false});
 
       // メモを削除
-      final snapshots = await firestore
+      final snapshots =  await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
           .collection('memos')

@@ -1,11 +1,11 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:firebase_crud/provider/app_methods.dart';
-import 'package:firebase_crud/provider/firebase_provider.dart';
+import 'package:firebase_crud/application/provider/app_methods.dart';
+import 'package:firebase_crud/application/provider/firebase_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('MemoRepository', () {
+  group('メモリポジトリー', () {
     late final  ProviderContainer container;
 
     setUp(() {
@@ -17,7 +17,7 @@ void main() {
       );
     });
 
-    test('addMemo should add memo to Firestore', () async {
+    test('addMemoメソッドのテスト', () async {
       await container.read(memoRepositoryProvider).addMemo('Test memo');
 
       // Firestoreからメモを取得

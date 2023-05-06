@@ -14,7 +14,7 @@ class Memo with _$Memo {
   factory Memo.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     if (data == null) {
-      throw StateError('Missing data for document ${snapshot.id}');
+      throw StateError('Missing features for document ${snapshot.id}');
     }
     return Memo(
       text: data['text'] as String,

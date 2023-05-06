@@ -1,5 +1,5 @@
-import 'package:firebase_crud/data/heatmap_database.dart';
-import 'package:firebase_crud/model/memo.dart';
+import 'package:firebase_crud/domain/features/heatmap_database.dart';
+import 'package:firebase_crud/domain/model/memo.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_crud/components/month_summary_heatmap.dart';
-import 'package:firebase_crud/model/memo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../components/month_summary_calender.dart';
-import '../data/heatmap_database.dart';
-import '../provider/app_methods.dart';
-import '../provider/firebase_provider.dart';
+import '../../application/provider/app_methods.dart';
+import '../../application/provider/firebase_provider.dart';
+import '../../domain/components/month_summary_calender.dart';
+import '../../domain/components/month_summary_heatmap.dart';
+import '../../domain/features/heatmap_database.dart';
+import '../../domain/model/memo.dart';
 import '../widget/modal.dart';
 
 enum MonthlySummaryMode {
@@ -41,7 +41,7 @@ class HomePage extends ConsumerWidget {
 
     int count = 0; /// keyのデフォルト値を設定
 
-    if (heatmapDates != null && heatmapDates.isNotEmpty) {
+    if (heatmapDates.isNotEmpty) {
       count = heatmapDates.values
           .elementAt(0); /// heatmapDatesがnullでなく、かつkeysが空でない場合にkeyを取得
     }

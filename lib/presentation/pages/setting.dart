@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../provider/app_methods.dart';
-import '../provider/firebase_provider.dart';
+import '../../application/provider/app_methods.dart';
+import '../../application/provider/firebase_provider.dart';
 import '../widget/withdrawal_dialog.dart';
 
 class SettingPage extends ConsumerWidget {
