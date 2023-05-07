@@ -20,14 +20,14 @@ void main() {
     });
 
     test('updateMemoメソッドのテスト', () async {
-      // メモを追加
+      /// メモを追加
       final memoRef = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
           .collection('memos')
           .add({'text': 'Test memo', 'isDone': false});
 
-      // メモを更新
+      /// メモを更新
       final snapshots = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
@@ -36,7 +36,7 @@ void main() {
       final document = snapshots.docs.first;
       await memoRepository.updateMemo(document, 'Updated memo');
 
-      // メモが更新されたことを確認
+      /// メモが更新されたことを確認
       final snapshot = await memoRef.get();
       expect(snapshot.data()?['text'], equals('Updated memo'));
     });

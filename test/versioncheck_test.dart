@@ -32,7 +32,7 @@ void main() {
               'ios_force_app_version': '1.0.0',
               'android_force_app_version': '1.0.0',
             });
-            // アプリのパッケージ情報を定義
+            /// アプリのパッケージ情報を定義
             final packageInfo = PackageInfo(
               appName: 'test',
               packageName: 'com.example.test',

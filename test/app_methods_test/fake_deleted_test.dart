@@ -29,7 +29,7 @@ void main() {
           .doc();
       await memoRef.set({'text': 'Test memo', 'isDone': false});
 
-      // メモを削除
+      /// メモを削除
       final snapshots =  await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
@@ -38,7 +38,7 @@ void main() {
       final document = snapshots.docs.first;
       await memoRepository.deleteMemo(document);
 
-      // メモが削除されたことを確認
+      /// メモが削除されたことを確認
       final snapshot = await memoRef.get();
       expect(snapshot.exists, isFalse);
     });

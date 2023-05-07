@@ -27,7 +27,7 @@ void main() {
           .collection('memos')
           .add({'text': 'Test memo', 'isDone': false});
 
-      // メモを更新する
+      /// メモを更新する
       final snapshots = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
@@ -36,7 +36,7 @@ void main() {
       final document = snapshots.docs.first;
       await memoRepository.isDoneTasks(document, true);
 
-      // メモが更新されたことを確認する
+      /// メモが更新されたことを確認する
       final snapshot = await memoRef.get();
       expect(snapshot.data()?['isDone'], equals(true));
     });

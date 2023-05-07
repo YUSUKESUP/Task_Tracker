@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('fetchHeatMapDateSet', () {
-    // テスト用のデータ
+    /// テスト用のデータ
     final List<Memo> tasks = [
       Memo(text: 'Task 1', createdAt: DateTime(2023, 4, 1), isDone: true),
       Memo(text: 'Task 2', createdAt: DateTime(2023, 4, 1), isDone: true),
@@ -16,7 +16,7 @@ void main() {
       Memo(text: 'Task 8', createdAt: DateTime(2023, 4, 7), isDone: true),
     ];
 
-    // テスト用の期待する結果
+    /// テスト用の期待する結果
     final expectedMap = {
       DateTime(2023, 4, 1): 2,
       DateTime(2023, 4, 2): 1,
@@ -25,10 +25,10 @@ void main() {
       DateTime(2023, 4, 7): 1,
     };
 
-    // fetchHeatMapDateSetメソッドの実行
+    /// fetchHeatMapDateSetメソッドの実行
     final resultMap = fetchHeatMapDateSet(tasks);
 
-    // 期待する結果と一致するか確認
+    ///  期待する結果と一致するか確認
     expect(resultMap.length, expectedMap.length);
   });
 }

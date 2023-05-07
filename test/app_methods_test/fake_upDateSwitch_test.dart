@@ -26,10 +26,10 @@ void main() {
 
 
     test('updateSwitchメソッドのテスト', () async {
-      // switchの値を更新
+      /// switchの値を更新
       await memoRepository.upDateSwitch(true);
 
-      // switchの値が更新されたことを確認
+      /// switchの値が更新されたことを確認
       final snapshot =  await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
