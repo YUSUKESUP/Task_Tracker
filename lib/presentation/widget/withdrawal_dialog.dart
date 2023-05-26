@@ -8,7 +8,7 @@ import '../pages/withdrawal.dart';
 class WithdrawalDialogPage extends ConsumerWidget {
    WithdrawalDialogPage({Key? key}) : super(key: key);
 
-  final appMethod = memoRepositoryProvider;
+  final appMethod = tasksRepositoryProvider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

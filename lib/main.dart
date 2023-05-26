@@ -9,7 +9,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'application/provider/version_check.dart';
-import 'infrastructure/firebase_options.dart';
+import 'infrastructure/firebase/firebase_options.dart';
 
 void main() async {
 

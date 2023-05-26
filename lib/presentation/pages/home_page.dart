@@ -7,7 +7,7 @@ import '../../application/provider/firebase_provider.dart';
 import '../../domain/components/month_summary_calender.dart';
 import '../../domain/components/month_summary_heatmap.dart';
 import '../../domain/features/heatmap_database.dart';
-import '../../domain/model/memo.dart';
+import '../../domain/model/task.dart';
 import '../widget/modal.dart';
 
 enum MonthlySummaryMode {
@@ -27,12 +27,12 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final firebaseMemos = ref.watch(firebaseMemosProvider);
+    final firebaseMemos = ref.watch(firebaseTasksProvider);
     final controllerProvider = ref.watch(textEditingController);
 
     ///firebaseMemosの値をfirebaseTasksSnapshotListsへ
     final firebaseTasksSnapshot = firebaseMemos.valueOrNull;
-    final List<Memo> firebaseTasksSnapshotLists = [];
+    final List<Task> firebaseTasksSnapshotLists = [];
     firebaseTasksSnapshotLists.addAll(
         firebaseTasksSnapshot?.docs.map((doc) => doc.data()).toList() ?? []);
 
@@ -47,7 +47,7 @@ class HomePage extends ConsumerWidget {
     }
 
 
-    final appMethod = memoRepositoryProvider;
+    final appMethod = tasksRepositoryProvider;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -90,7 +90,7 @@ class HomePage extends ConsumerWidget {
                                       onPress: () {
                                         ref
                                             .read(appMethod)
-                                            .updateMemo(document,
+                                            .updateTask(document,
                                                 controllerProvider.text);
                                         controllerProvider.clear();
                                         Navigator.pop(ctx);
@@ -108,7 +108,7 @@ class HomePage extends ConsumerWidget {
                               onPressed: (context) {
                                 ref
                                     .read(appMethod)
-                                    .deleteMemo(document);
+                                    .deleteTask(document);
                               },
                               backgroundColor: Colors.red.shade400,
                               icon: Icons.delete,

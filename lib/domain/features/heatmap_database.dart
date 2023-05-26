@@ -1,7 +1,8 @@
+import 'package:firebase_crud/domain/model/task.dart';
 import 'package:flutter/material.dart';
-import '../model/memo.dart';
 
-Map<DateTime, int> fetchHeatMapDateSet(List<Memo> tasks) {
+
+Map<DateTime, int> fetchHeatMapDateSet(List<Task> tasks) {
   final map = <DateTime, int>{};
 
   ///スタートの日付を設定

@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('メモリポジトリー', () {
-    late MemoRepository memoRepository;
+  group('タスクリポジトリー', () {
+    late TasksRepository tasksRepository;
     late ProviderContainer container;
 
     setUp(() {
@@ -16,29 +16,29 @@ void main() {
           uidProvider.overrideWithValue('test_user_id'),
         ],
       );
-      memoRepository = container.read(memoRepositoryProvider);
+      tasksRepository = container.read(tasksRepositoryProvider);
     });
 
-    test('updateMemoメソッドのテスト', () async {
-      /// メモを追加
-      final memoRef = await container.read(firebaseFirestoreProvider)
+    test('updateTaskメソッドのテスト', () async {
+      /// タスクを追加
+      final taskRef = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
-          .collection('memos')
-          .add({'text': 'Test memo', 'isDone': false});
+          .collection('tasks')
+          .add({'text': 'Test task', 'isDone': false});
 
-      /// メモを更新
+      /// タスクを更新
       final snapshots = await container.read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
-          .collection('memos')
+          .collection('tasks')
           .get();
       final document = snapshots.docs.first;
-      await memoRepository.updateMemo(document, 'Updated memo');
+      await tasksRepository.updateTask(document, 'Updated task');
 
       /// メモが更新されたことを確認
-      final snapshot = await memoRef.get();
-      expect(snapshot.data()?['text'], equals('Updated memo'));
+      final snapshot = await taskRef.get();
+      expect(snapshot.data()?['text'], equals('Updated task'));
     });
   });
 }

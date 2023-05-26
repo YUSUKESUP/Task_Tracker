@@ -5,35 +5,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('メモリポジトリー', () {
-    late MemoRepository memoRepository;
+  group('タスクリポジトリー', () {
+    late TasksRepository tasksRepository;
     late ProviderContainer container;
 
     setUp(() async {
-
-      await container.read(firebaseFirestoreProvider)
-          .collection('users')
-          .doc('test_user_id')
-          .set({'shouldNotification': false});
-       container = ProviderContainer(
+      container = ProviderContainer(
         overrides: [
           firebaseFirestoreProvider.overrideWithValue(FakeFirebaseFirestore()),
           uidProvider.overrideWithValue('test_user_id'),
         ],
       );
-      memoRepository = container.read(memoRepositoryProvider);
-    });
 
+      await container
+          .read(firebaseFirestoreProvider)
+          .collection('users')
+          .doc('test_user_id')
+          .set({'shouldNotification': false});
+
+      tasksRepository = container.read(tasksRepositoryProvider);
+    });
 
     test('updateSwitchメソッドのテスト', () async {
       /// switchの値を更新
-      await memoRepository.upDateSwitch(true);
+      await tasksRepository.upDateSwitch(true);
 
       /// switchの値が更新されたことを確認
-      final snapshot =  await container.read(firebaseFirestoreProvider)
+      final snapshot = await container
+          .read(firebaseFirestoreProvider)
           .collection('users')
           .doc('test_user_id')
           .get();
+
       expect(snapshot.data()?['shouldNotification'], equals(true));
     });
   });

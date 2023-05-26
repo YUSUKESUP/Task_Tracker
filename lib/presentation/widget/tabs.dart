@@ -18,7 +18,7 @@ class TabsPage extends ConsumerWidget {
     const unselectedColor = Color(0xff5f6368);
 
     final textEditingControllerProvider = ref.watch(textEditingController);
-    final appMethod = memoRepositoryProvider;
+    final appMethod = tasksRepositoryProvider;
 
     return DefaultTabController(
       length: 2,
@@ -108,7 +108,7 @@ class TabsPage extends ConsumerWidget {
                       onPress: () async {
                         ref
                             .read(appMethod)
-                            .addMemo(textEditingControllerProvider.text);
+                            .addTask(textEditingControllerProvider.text);
                         textEditingControllerProvider.clear();
                         Navigator.pop(context);
                       },

@@ -3,36 +3,37 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_provider.dart';
 
-final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(firebaseFirestoreProvider), ref));
+final tasksRepositoryProvider = Provider((ref) => TasksRepository(ref.watch(firebaseFirestoreProvider), ref));
 
- class MemoRepository {
+ class TasksRepository {
 
    final FirebaseFirestore firestore;
    final Ref _ref;
 
-   MemoRepository(this.firestore, this._ref);
+   TasksRepository(this.firestore, this._ref);
 
   ///タスク追加
-  Future<void> addMemo(String text) async {
+  Future<void> addTask(String text) async {
     final uid = _ref.watch(uidProvider);
       await _ref
         .read(firebaseFirestoreProvider)
         .collection('users')
         .doc(uid)
-        .collection('memos')
+        .collection('tasks')
         .add({
       'text': text,
       'createdAt': FieldValue.serverTimestamp(),
       'isDone': false
     });
   }
+
    ///タスク編集　
-   Future<void> updateMemo(QueryDocumentSnapshot document, String text) async {
+   Future<void> updateTask(QueryDocumentSnapshot document, String text) async {
      await document.reference.update({'text': text});
    }
 
    ///タスク削除
-  Future<void> deleteMemo(QueryDocumentSnapshot document) async {
+  Future<void> deleteTask(QueryDocumentSnapshot document) async {
     await document.reference.delete();
   }
 
@@ -62,7 +63,7 @@ final memoRepositoryProvider = Provider((ref) => MemoRepository(ref.watch(fireba
     await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
-        .collection('memos')
+        .collection('tasks')
         .doc(uid)
         .delete();
     await user?.delete();

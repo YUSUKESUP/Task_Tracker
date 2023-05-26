@@ -1,22 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'memo.freezed.dart';
+part 'task.freezed.dart';
 
 @freezed
-class Memo with _$Memo {
-  const factory Memo({
+class Task with _$Task {
+  const factory Task({
     required String text,
     required DateTime createdAt,
     required bool isDone,
-  }) = _Memo;
+  }) = _Task;
 
-  factory Memo.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  factory Task.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     if (data == null) {
       throw StateError('Missing features for document ${snapshot.id}');
     }
-    return Memo(
+    return Task(
       text: data['text'] as String,
       createdAt: (data['createdAt'] as Timestamp? )?.toDate() ?? DateTime.now(),
       isDone: data['isDone'] as bool,

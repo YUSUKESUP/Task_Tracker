@@ -2,15 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/model/memo.dart';
+import '../../domain/model/task.dart';
 
-
+///Firebaseの情報取得
 final firebaseFirestoreProvider =
     Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
 
-final textEditingController = StateProvider.autoDispose((ref) {
-  return TextEditingController(text: '');
-});
 
 ///ユーザー情報の取得
 final userProvider = StreamProvider(
@@ -29,16 +26,21 @@ final firebaseNotificationsProvider = StreamProvider.autoDispose((ref) {
   return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
 });
 
-///memosサブコレクションの取得
-final firebaseMemosProvider = StreamProvider<QuerySnapshot<Memo>>((ref) {
+///tasksサブコレクションの取得
+final firebaseTasksProvider = StreamProvider<QuerySnapshot<Task>>((ref) {
   final uid = ref.watch(uidProvider);
   return FirebaseFirestore.instance
       .collection('users')
       .doc(uid)
-      .collection('memos')
+      .collection('tasks')
       .orderBy('createdAt')
-      .withConverter<Memo>(
-      fromFirestore: (snapshot, _) => Memo.fromFirestore(snapshot),
-      toFirestore: (memo, _) => memo.toDocument())
+      .withConverter<Task>(
+      fromFirestore: (snapshot, _) => Task.fromFirestore(snapshot),
+      toFirestore: (task, _) => task.toDocument())
       .snapshots();
+});
+
+///TextEditingControllerを使うため
+final textEditingController = StateProvider.autoDispose((ref) {
+  return TextEditingController(text: '');
 });

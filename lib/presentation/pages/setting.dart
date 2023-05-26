@@ -13,7 +13,7 @@ class SettingPage extends ConsumerWidget {
 
     final firebaseNotifications = ref.watch(firebaseNotificationsProvider);
 
-    final appMethod = memoRepositoryProvider;
+    final appMethod = tasksRepositoryProvider;
 
     ///退会ダイアログ
     Future<void> withdrawalDialog() async {
