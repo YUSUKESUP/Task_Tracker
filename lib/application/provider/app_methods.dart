@@ -38,7 +38,7 @@ final tasksRepositoryProvider = Provider((ref) => TasksRepository(ref.watch(fire
   }
 
    ///タスクが完了しているか
-   Future<void> isDoneTasks(QueryDocumentSnapshot document, bool value) async {
+   Future<void> isDoneTask(QueryDocumentSnapshot document, bool value) async {
      await document.reference.update({'isDone': value});
    }
 

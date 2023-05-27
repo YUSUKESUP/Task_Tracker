@@ -132,7 +132,7 @@ class HomePage extends ConsumerWidget {
                                   onChanged: (bool? value) {
                                     ref
                                         .read(appMethod)
-                                        .isDoneTasks(document,value ?? false);
+                                        .isDoneTask(document,value ?? false);
                                   },
                                 ),
                                 title: Text(

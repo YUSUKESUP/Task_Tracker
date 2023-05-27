@@ -8,17 +8,16 @@ import '../../domain/model/task.dart';
 final firebaseFirestoreProvider =
     Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
 
-
-///ユーザー情報の取得
-final userProvider = StreamProvider(
-      (ref) => FirebaseAuth.instance.authStateChanges(),
-);
-
 ///uidの取得
 final uidProvider = Provider((ref) {
   final user = ref.watch(userProvider).valueOrNull;
   return user?.uid;
 });
+
+///ユーザー情報の取得
+final userProvider = StreamProvider(
+      (ref) => FirebaseAuth.instance.authStateChanges(),
+);
 
 ///usersコレクションの取得
 final firebaseNotificationsProvider = StreamProvider.autoDispose((ref) {

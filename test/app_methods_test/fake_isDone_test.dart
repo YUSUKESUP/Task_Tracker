@@ -34,7 +34,7 @@ void main() {
           .collection('tasks')
           .get();
       final document = snapshots.docs.first;
-      await tasksRepository.isDoneTasks(document, true);
+      await tasksRepository.isDoneTask(document, true);
 
       /// タスクが更新されたことを確認する
       final snapshot = await taskRef.get();
